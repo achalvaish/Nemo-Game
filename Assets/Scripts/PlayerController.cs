@@ -39,13 +39,15 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        if (Vector2.Distance(this.transform.position, clickPos) > 1f)
+        //If the player is not yet at the mouse click position, move towards it following the path finder
+        if (Vector2.Distance(this.transform.position, clickPos) > 0.2f)
         {
             Vector2 targetPosition = pathFinding();
 
             Vector2 velVector = targetPosition - (Vector2)this.transform.position;
             velVector = velVector.normalized;
             velVector *= maxSpeed;
+            
 
             rigidBody.velocity = velVector;
         }
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour {
         }
 
 
+        //Face the direction you are moving
         if(rigidBody.velocity.x > 0)
         {
             this.transform.localScale = new Vector3(-1, 1, 1);
@@ -67,6 +70,7 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
+    //Function to find which point of the found path the player is moving towards.
     private Vector2 pathFinding()
     {
         for(int i = calculatedPath.Length - 1; i >= pathNum; i--)
@@ -77,8 +81,18 @@ public class PlayerController : MonoBehaviour {
 
             if(!hit)
             {
+                if(i < calculatedPath.Length-1)
+                {
+                    dir = calculatedPath[i+1] - (Vector2)this.transform.position;
+                    Vector2 diffVec = calculatedPath[i + 1] - calculatedPath[i];
+                    while(Physics2D.Raycast(this.transform.position, dir, dir.magnitude, 1 << LayerMask.NameToLayer("Terrain")))
+                    {
+                        dir -= diffVec * 0.01f;
+                    }
+                }
+
                 pathNum = i;
-                return calculatedPath[i];
+                return dir + (Vector2)this.transform.position;
             }
         }
         return this.transform.position;

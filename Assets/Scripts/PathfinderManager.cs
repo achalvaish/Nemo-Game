@@ -24,7 +24,7 @@ public class PathfinderManager : MonoBehaviour {
         //printArray();
 	}
 
-
+    //Creates the pathfinding array
     private void fillArray()
     {
         float lowX = -9;
@@ -165,6 +165,7 @@ public class PathfinderManager : MonoBehaviour {
         return calculatedPath;
     }
 
+    //Backtracks from a node to find all the moves to reach that node from the player
     private Vector2[] backtrack(PathNode startNode)
     {
         List<Vector2> tempList = new List<Vector2>();
