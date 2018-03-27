@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour {
 
             if(!hit)
             {
+
+                //This calculates a sub point between the last point the player can see and the first the player cant see. This means the path found is absolutely optimal.
                 if(i < calculatedPath.Length-1)
                 {
                     dir = calculatedPath[i+1] - (Vector2)this.transform.position;
