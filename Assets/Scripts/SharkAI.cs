@@ -12,12 +12,21 @@ public class SharkAI : MonoBehaviour {
     private float t, maxT, distance;
     private Vector3 lerpStart;
     private Vector3 lerpDir;
-    
-	// Use this for initialization
-	void Start () {
+
+    enum sharkStates
+    {
+        Patrol, chaseFish, eatFish
+    }
+
+    private sharkStates sharkState;
+
+    // Use this for initialization
+    void Start () {
         this.transform.position = patrolPoints[0].transform.position;
         currentPatrolIndex = 0;
         currentPatrolPoint = patrolPoints[currentPatrolIndex];
+
+        sharkState = sharkStates.Patrol;
 	}
 
     // Update is called once per frame
@@ -25,6 +34,24 @@ public class SharkAI : MonoBehaviour {
     {
         t += Time.deltaTime;
         Patrol();
+
+        switch (sharkState)
+        {
+            // If there are no fish nearby, the shark will patrol
+            case sharkStates.Patrol:
+                Patrol();
+                break;
+
+            // If the shark detects a fish, it will chase it
+            case sharkStates.chaseFish:
+                chaseFish();
+                break;
+
+            // If the shark catches the fish, it will eat it
+            case sharkStates.eatFish:
+                eatFish();
+                break;
+        }
 
     }
 
@@ -72,13 +99,8 @@ public class SharkAI : MonoBehaviour {
         Vector3 patrolPointDir = currentPatrolPoint.position - transform.position;
         Vector3 newScale;
 
-
-
         //Begin Lerp
-        this.transform.position = lerpStart + (t / maxT) * lerpDir;
-
-
-        
+        this.transform.position = lerpStart + (t / maxT) * lerpDir;     
         
         // Figure out if the patrol point is to the left or right of the shark
         if (patrolPointDir.x < 0f) {
@@ -92,6 +114,16 @@ public class SharkAI : MonoBehaviour {
             newScale = new Vector3(0.5f, 0.5f, 1);
             transform.localScale = newScale;
         }
+    }
+
+    void chaseFish()
+    {
+
+    }
+
+    void eatFish()
+    {
+
     }
 
 }

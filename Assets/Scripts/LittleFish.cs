@@ -15,7 +15,7 @@ public class LittleFish : MonoBehaviour {
 
     enum fishStates
     {
-        searchForMother, foundMother, Dead
+        Idle, searchForMother, followMother, Evade, Dead
     }
 
     private fishStates fishState;
@@ -51,6 +51,9 @@ public class LittleFish : MonoBehaviour {
         //State machine for little fish
         switch (fishState)
         {
+            case fishStates.Idle:
+                Idle();
+                break;
 
             //While searching for mother it moves at max speed towards the mothers position.
             case fishStates.searchForMother:
@@ -58,7 +61,7 @@ public class LittleFish : MonoBehaviour {
 
                 if(distToMother < 1f)
                 {
-                    fishState = fishStates.foundMother;
+                    fishState = fishStates.followMother;
                     this.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                     break;
                 }
@@ -70,7 +73,7 @@ public class LittleFish : MonoBehaviour {
                 break;
 
             //Once it has found the mother, it moves at a more relaxed speed, following the mother.
-            case fishStates.foundMother:
+            case fishStates.followMother:
 
                 Vector2 cohesionVec = cohesion();
                 Vector2 alignmentVec = alignment();
@@ -87,6 +90,16 @@ public class LittleFish : MonoBehaviour {
                 dirVector *= scaleVal;
 
                 this.GetComponent<Rigidbody2D>().velocity = ((Vector2)dirVector + cohesionVec + alignmentVec + separationVec);
+                break;
+
+            // If a fish is detected by a shark, it will attempt to evade the shark
+            case fishStates.Evade:
+                Evade();
+                break;
+
+            // If a fish is caught by a shark, it will be eaten and is out of the game
+            case fishStates.Dead:
+                Dead();
                 break;
 
         }
@@ -172,5 +185,30 @@ public class LittleFish : MonoBehaviour {
         alignmentVector *= alignmentStrength;
 
         return alignmentVector;
+    }
+
+    void Idle()
+    {
+
+    }
+
+    void searchForMother()
+    {
+
+    }
+
+    void followMother()
+    {
+
+    }
+
+    void Evade()
+    {
+
+    }
+
+    void Dead()
+    {
+
     }
 }

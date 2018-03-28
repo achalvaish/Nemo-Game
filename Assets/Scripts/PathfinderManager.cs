@@ -265,7 +265,6 @@ public class PathfinderManager : MonoBehaviour {
         //Convert to an array and return
         return tempList.ToArray();
 
-
     }
 
     
