@@ -13,9 +13,12 @@ public class SharkAI : MonoBehaviour {
     private Vector3 lerpStart;
     private Vector3 lerpDir;
 
+    public Transform target;
+    public float chaseRange;
+
     enum sharkStates
     {
-        Patrol, chaseFish, eatFish
+        Patrol, chaseFish, returnToPatrolPath
     }
 
     private sharkStates sharkState;
@@ -26,30 +29,47 @@ public class SharkAI : MonoBehaviour {
         currentPatrolIndex = 0;
         currentPatrolPoint = patrolPoints[currentPatrolIndex];
 
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
         sharkState = sharkStates.Patrol;
 	}
 
     // Update is called once per frame
     void Update()
     {
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
         t += Time.deltaTime;
-        Patrol();
+        // Patrol();
 
         switch (sharkState)
         {
+
             // If there are no fish nearby, the shark will patrol
             case sharkStates.Patrol:
+                // Get the distance to the target and see if it is close enough to chase
+                if (distanceToTarget < chaseRange)
+                {
+                    sharkState = sharkStates.chaseFish;
+                    break;
+                }
+
                 Patrol();
                 break;
 
             // If the shark detects a fish, it will chase it
             case sharkStates.chaseFish:
+                if (distanceToTarget > chaseRange)
+                {
+                    sharkState = sharkStates.Patrol;
+                    break;
+                }
+                
                 chaseFish();
                 break;
 
             // If the shark catches the fish, it will eat it
-            case sharkStates.eatFish:
-                eatFish();
+            case sharkStates.returnToPatrolPath:
+                returnToPatrolPath();
                 break;
         }
 
@@ -118,10 +138,11 @@ public class SharkAI : MonoBehaviour {
 
     void chaseFish()
     {
-
+        // Move towards the target
+        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
 
-    void eatFish()
+    void returnToPatrolPath()
     {
 
     }
