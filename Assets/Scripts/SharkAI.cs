@@ -12,6 +12,9 @@ public class SharkAI : MonoBehaviour {
     private float t, maxT, distance;
     private Vector3 lerpStart;
     private Vector3 lerpDir;
+    private PathfinderManager pathFinder;
+    private Vector2 [] calculatedPath;
+    private int pathNum = 0;
 
     public Transform target;
     public float chaseRange;
@@ -28,6 +31,7 @@ public class SharkAI : MonoBehaviour {
         this.transform.position = patrolPoints[0].transform.position;
         currentPatrolIndex = 0;
         currentPatrolPoint = patrolPoints[currentPatrolIndex];
+        pathFinder = FindObjectOfType<PathfinderManager>();
 
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
@@ -60,7 +64,9 @@ public class SharkAI : MonoBehaviour {
             case sharkStates.chaseFish:
                 if (distanceToTarget > chaseRange)
                 {
-                    sharkState = sharkStates.Patrol;
+                    calculatedPath = pathFinder.getPath(this.transform.position, currentPatrolPoint.position);
+                    pathNum = 0;
+                    sharkState = sharkStates.returnToPatrolPath;
                     break;
                 }
                 
@@ -163,7 +169,65 @@ public class SharkAI : MonoBehaviour {
 
     void returnToPatrolPath()
     {
+        if (Vector2.Distance(this.transform.position, currentPatrolPoint.position) > 0.2f)
+        {
+            Vector2 targetPosition = pathFinding();
 
+            Vector2 velVector = targetPosition - (Vector2)this.transform.position;
+            velVector = velVector.normalized;
+            velVector *= speed;
+
+
+            GetComponent<Rigidbody2D>().velocity = velVector;
+            Vector3 newScale;
+            // Figure out if target is to the left or right of the shark
+            if (GetComponent<Rigidbody2D>().velocity.x < 0f)
+            {
+                // Get shark to face left
+                newScale = new Vector3(-0.5f, 0.5f, 1);
+                transform.localScale = newScale;
+            }
+            if (GetComponent<Rigidbody2D>().velocity.x > 0f)
+            {
+                // Get shark to face right
+                newScale = new Vector3(0.5f, 0.5f, 1);
+                transform.localScale = newScale;
+            }
+
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            sharkState = sharkStates.Patrol;
+        }
     }
 
+    private Vector2 pathFinding()
+    {
+        for (int i = calculatedPath.Length - 1; i >= pathNum; i--)
+        {
+            //Check for line of sight to the node
+            Vector2 dir = calculatedPath[i] - (Vector2)this.transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(this.transform.position, dir, dir.magnitude, 1 << LayerMask.NameToLayer("Terrain"));
+
+            if (!hit)
+            {
+
+                //This calculates a sub point between the last point the player can see and the first the player cant see. This means the path found is absolutely optimal.
+                if (i < calculatedPath.Length - 1)
+                {
+                    dir = calculatedPath[i + 1] - (Vector2)this.transform.position;
+                    Vector2 diffVec = calculatedPath[i + 1] - calculatedPath[i];
+                    while (Physics2D.Raycast(this.transform.position, dir, dir.magnitude, 1 << LayerMask.NameToLayer("Terrain")))
+                    {
+                        dir -= diffVec * 0.01f;
+                    }
+                }
+
+                pathNum = i;
+                return dir + (Vector2)this.transform.position;
+            }
+        }
+        return this.transform.position;
+    }
 }
