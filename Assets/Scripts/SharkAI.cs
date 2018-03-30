@@ -247,15 +247,29 @@ public class SharkAI : MonoBehaviour {
         // Find the distance from the shark for each fish
         foreach (Transform fish in fishes)
         {
-            Vector3 directionToTarget = fish.position - currentPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr)
+            if(fish.gameObject.activeSelf)
             {
-                closestDistanceSqr = dSqrToTarget;
-                closestTarget = fish;
-            }
+                Vector3 directionToTarget = fish.position - currentPosition;
+                float dSqrToTarget = directionToTarget.sqrMagnitude;
+                if (dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    closestTarget = fish;
+                }
+            }      
         }
 
        return closestTarget;
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log(other.gameObject);
+
+        if(other.gameObject.layer == LayerMask.NameToLayer("Fish"))
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
+
 }
