@@ -74,6 +74,13 @@ public class SharkAI : MonoBehaviour {
 
             // If the shark catches the fish, it will eat it
             case sharkStates.returnToPatrolPath:
+                // Get the distance to the target and see if it is close enough to chase
+                if (distanceToTarget < chaseRange)
+                {
+                    sharkState = sharkStates.chaseFish;
+                    break;
+                }
+
                 returnToPatrolPath();
                 break;
         }
@@ -236,6 +243,8 @@ public class SharkAI : MonoBehaviour {
         Transform closestTarget = null;
         float closestDistanceSqr = Mathf.Infinity;
         Vector3 currentPosition = transform.position;
+
+        // Find the distance from the shark for each fish
         foreach (Transform fish in fishes)
         {
             Vector3 directionToTarget = fish.position - currentPosition;
