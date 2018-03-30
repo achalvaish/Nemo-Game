@@ -16,7 +16,8 @@ public class SharkAI : MonoBehaviour {
     private Vector2 [] calculatedPath;
     private int pathNum = 0;
 
-    public Transform target;
+    private Transform target;
+    public Transform[] fishes;
     public float chaseRange;
 
     enum sharkStates
@@ -32,18 +33,16 @@ public class SharkAI : MonoBehaviour {
         currentPatrolIndex = 0;
         currentPatrolPoint = patrolPoints[currentPatrolIndex];
         pathFinder = FindObjectOfType<PathfinderManager>();
-
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-
-        sharkState = sharkStates.Patrol;
+       
+       sharkState = sharkStates.Patrol;
 	}
 
     // Update is called once per frame
     void Update()
     {
+        target = findClosestTarget(fishes);
         float distanceToTarget = Vector3.Distance(transform.position, target.position);
         t += Time.deltaTime;
-        // Patrol();
 
         switch (sharkState)
         {
@@ -213,7 +212,8 @@ public class SharkAI : MonoBehaviour {
             if (!hit)
             {
 
-                //This calculates a sub point between the last point the player can see and the first the player cant see. This means the path found is absolutely optimal.
+                //This calculates a sub point between the last point the player can see and the first the player cant see. This means the 
+                //path found is absolutely optimal.
                 if (i < calculatedPath.Length - 1)
                 {
                     dir = calculatedPath[i + 1] - (Vector2)this.transform.position;
@@ -229,5 +229,24 @@ public class SharkAI : MonoBehaviour {
             }
         }
         return this.transform.position;
+    }
+
+    Transform findClosestTarget (Transform[] targets)
+    {
+        Transform closestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach (Transform fish in fishes)
+        {
+            Vector3 directionToTarget = fish.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                closestTarget = fish;
+            }
+        }
+
+       return closestTarget;
     }
 }
