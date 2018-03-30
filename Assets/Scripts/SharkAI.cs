@@ -138,8 +138,27 @@ public class SharkAI : MonoBehaviour {
 
     void chaseFish()
     {
+        // Turn to face the target
+        // Finding the direction Vector that points to the target
+        Vector3 targetDir = target.position - transform.position;
+        Vector3 newScale;
+
         // Move towards the target
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
+        // Figure out if target is to the left or right of the shark
+        if (targetDir.x < 0f)
+        {
+            // Get shark to face left
+            newScale = new Vector3(-0.5f, 0.5f, 1);
+            transform.localScale = newScale;
+        }
+        if (targetDir.x > 0f)
+        {
+            // Get shark to face right
+            newScale = new Vector3(0.5f, 0.5f, 1);
+            transform.localScale = newScale;
+        }
     }
 
     void returnToPatrolPath()
