@@ -221,8 +221,7 @@ public class LittleFish : MonoBehaviour {
     {
         // Find direction fish should move to get away from shark
         Vector3 moveDirection = transform.position - Shark.transform.position;
-        Vector3 newScale;
-
+        
         // Move away from shark
         transform.Translate(moveDirection.normalized * speed * Time.deltaTime);
 
