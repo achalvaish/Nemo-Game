@@ -657,6 +657,11 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: chaseRange
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
   m_IsPrefabParent: 0
@@ -723,6 +728,16 @@ Prefab:
     - target: {fileID: 1318608000311774, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: Shark
+      value: 
+      objectReference: {fileID: 1725430534}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: chaseRange
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
@@ -1458,6 +1473,11 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: chaseRange
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
   m_IsPrefabParent: 0
@@ -1499,7 +1519,7 @@ Prefab:
     - target: {fileID: 114822774497131370, guid: a30e28d5d79b4fe4dab57eb511d0238b,
         type: 2}
       propertyPath: fishes.Array.size
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4685208914155468, guid: a30e28d5d79b4fe4dab57eb511d0238b, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1577,37 +1597,41 @@ Prefab:
         type: 2}
       propertyPath: fishes.Array.data[0]
       value: 
-      objectReference: {fileID: 1548400830}
+      objectReference: {fileID: 1737827327}
     - target: {fileID: 114822774497131370, guid: a30e28d5d79b4fe4dab57eb511d0238b,
         type: 2}
       propertyPath: fishes.Array.data[1]
       value: 
-      objectReference: {fileID: 1737827327}
+      objectReference: {fileID: 575190968}
     - target: {fileID: 114822774497131370, guid: a30e28d5d79b4fe4dab57eb511d0238b,
         type: 2}
       propertyPath: fishes.Array.data[2]
       value: 
-      objectReference: {fileID: 575190968}
+      objectReference: {fileID: 1812779777}
     - target: {fileID: 114822774497131370, guid: a30e28d5d79b4fe4dab57eb511d0238b,
         type: 2}
       propertyPath: fishes.Array.data[3]
       value: 
-      objectReference: {fileID: 1812779777}
+      objectReference: {fileID: 1877961439}
     - target: {fileID: 114822774497131370, guid: a30e28d5d79b4fe4dab57eb511d0238b,
         type: 2}
       propertyPath: fishes.Array.data[4]
       value: 
-      objectReference: {fileID: 1877961439}
+      objectReference: {fileID: 1569575865}
     - target: {fileID: 114822774497131370, guid: a30e28d5d79b4fe4dab57eb511d0238b,
         type: 2}
       propertyPath: fishes.Array.data[5]
       value: 
-      objectReference: {fileID: 1569575865}
+      objectReference: {fileID: 983509675}
     - target: {fileID: 114822774497131370, guid: a30e28d5d79b4fe4dab57eb511d0238b,
         type: 2}
       propertyPath: fishes.Array.data[6]
       value: 
       objectReference: {fileID: 983509675}
+    - target: {fileID: 1270535616905684, guid: a30e28d5d79b4fe4dab57eb511d0238b, type: 2}
+      propertyPath: m_TagString
+      value: Shark
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a30e28d5d79b4fe4dab57eb511d0238b, type: 2}
   m_IsPrefabParent: 0
@@ -1670,6 +1694,16 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: Shark
+      value: 
+      objectReference: {fileID: 1725430534}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: chaseRange
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
   m_IsPrefabParent: 0
@@ -1719,6 +1753,16 @@ Prefab:
     - target: {fileID: 1318608000311774, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: Shark
+      value: 
+      objectReference: {fileID: 1725430534}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: chaseRange
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
@@ -1952,6 +1996,11 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
+        type: 2}
+      propertyPath: chaseRange
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
   m_IsPrefabParent: 0
@@ -2061,6 +2110,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1725430534 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4685208914155468, guid: a30e28d5d79b4fe4dab57eb511d0238b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1131604843}
 --- !u!1 &1736776741
 GameObject:
   m_ObjectHideFlags: 0

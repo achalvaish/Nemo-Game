@@ -12,6 +12,8 @@ public class LittleFish : MonoBehaviour {
 
     private PlayerController motherFish;
     private LittleFish [] otherFish;
+    private Transform Shark;
+    public float chaseRange;
 
     enum fishStates
     {
@@ -29,6 +31,8 @@ public class LittleFish : MonoBehaviour {
         randomTime = 0;
 
         otherFish = FindObjectsOfType<LittleFish>();
+
+        Shark = GameObject.FindGameObjectWithTag("Shark").transform;
 	}
 	
 	// Update is called once per frame
@@ -47,6 +51,8 @@ public class LittleFish : MonoBehaviour {
             this.transform.localScale = new Vector3(0.3f, 0.3f, 1);
         }
 
+        float distToMother = Vector3.Distance(this.transform.position, motherFish.transform.position);
+        float distToShark = Vector3.Distance(transform.position, Shark.position);
 
         //State machine for little fish
         switch (fishState)
@@ -57,43 +63,36 @@ public class LittleFish : MonoBehaviour {
 
             //While searching for mother it moves at max speed towards the mothers position.
             case fishStates.searchForMother:
-                float distToMother = Vector3.Distance(this.transform.position, motherFish.transform.position);
-
-                if(distToMother < 1f)
+                
+                if (distToMother < 1f)
                 {
                     fishState = fishStates.followMother;
                     this.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                     break;
                 }
 
-                Vector3 dirVector = motherFish.transform.position - this.transform.position;
-                dirVector = Vector3.Normalize(dirVector);
-                dirVector *= speed;
-                this.GetComponent<Rigidbody2D>().velocity = dirVector;
+                searchForMother();
                 break;
 
             //Once it has found the mother, it moves at a more relaxed speed, following the mother.
             case fishStates.followMother:
-
-                Vector2 cohesionVec = cohesion();
-                Vector2 alignmentVec = alignment();
-                Vector2 separationVec = separation();
-                dirVector = Vector2.zero;
-                if(Vector2.Distance(this.transform.position, motherFish.transform.position) > 2f)
+                if (distToShark < chaseRange)
                 {
-                    dirVector = motherFish.transform.position - this.transform.position;
-                    dirVector = dirVector.normalized * speed;
+                    fishState = fishStates.Evade;
+                    break;
                 }
-                
 
-                float scaleVal = Vector2.Distance(this.transform.position, motherFish.transform.position) / 5f;
-                dirVector *= scaleVal;
-
-                this.GetComponent<Rigidbody2D>().velocity = ((Vector2)dirVector + cohesionVec + alignmentVec + separationVec);
+                followMother();
                 break;
 
             // If a fish is detected by a shark, it will attempt to evade the shark
             case fishStates.Evade:
+                if (distToShark > chaseRange)
+                {
+                    fishState = fishStates.followMother;
+                    break;
+                }
+
                 Evade();
                 break;
 
@@ -194,16 +193,38 @@ public class LittleFish : MonoBehaviour {
 
     void searchForMother()
     {
-
+        Vector3 dirVector = motherFish.transform.position - this.transform.position;
+        dirVector = Vector3.Normalize(dirVector);
+        dirVector *= speed;
+        this.GetComponent<Rigidbody2D>().velocity = dirVector;
     }
 
     void followMother()
     {
+        Vector2 cohesionVec = cohesion();
+        Vector2 alignmentVec = alignment();
+        Vector2 separationVec = separation();
+        Vector3 dirVector = Vector2.zero;
 
+        if (Vector2.Distance(this.transform.position, motherFish.transform.position) > 2f)
+        {
+            dirVector = motherFish.transform.position - this.transform.position;
+            dirVector = dirVector.normalized * speed;
+        }
+
+        float scaleVal = Vector2.Distance(this.transform.position, motherFish.transform.position) / 5f;
+        dirVector *= scaleVal;
+        this.GetComponent<Rigidbody2D>().velocity = ((Vector2)dirVector + cohesionVec + alignmentVec + separationVec);
     }
 
     void Evade()
     {
+        // Find direction fish should move to get away from shark
+        Vector3 moveDirection = transform.position - Shark.transform.position;
+        Vector3 newScale;
+
+        // Move away from shark
+        transform.Translate(moveDirection.normalized * speed * Time.deltaTime);
 
     }
 
