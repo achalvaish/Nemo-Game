@@ -27,7 +27,7 @@ public class PathfinderManager : MonoBehaviour {
     //Creates the pathfinding array
     private void fillArray()
     {
-        float lowX = -9;
+        float lowX = -11;
         float lowY = -5;
         float maxX = 9;
         float maxY = 5;
@@ -185,7 +185,7 @@ public class PathfinderManager : MonoBehaviour {
     //Converts an array position into a Vector 2 of the world space position.
     private Vector2 arrayToVector(int x, int y)
     {
-        float xVal = -9f + x * xStep + xStep / 2;
+        float xVal = -11f + x * xStep + xStep / 2;
         float yVal = -5f + y * yStep + yStep / 2;
 
         return new Vector2(xVal, yVal);
@@ -194,7 +194,7 @@ public class PathfinderManager : MonoBehaviour {
     //Converts a world space position into a Vector2 containing the array position of that world space.
     private Vector2 vectorToArray(float xPos, float yPos)
     {
-        float checkX = -9f;
+        float checkX = -11f;
         int x = 0;
         float checkY = -5f;
         int y = 0;
