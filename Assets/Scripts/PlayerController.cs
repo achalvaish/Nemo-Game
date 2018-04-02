@@ -11,16 +11,27 @@ public class PlayerController : MonoBehaviour {
     private Vector2[] calculatedPath;
     private PathfinderManager pathFinder;
     private int pathNum = 0;
+    private Vector3 offset;
+    public GameObject player;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         rigidBody = this.GetComponent<Rigidbody2D>();
         pathFinder = FindObjectOfType<PathfinderManager>();
         clickPos = this.transform.position;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        //Calculate and store the offset value by getting the distance between the player's position and camera's position.
+        offset = transform.position - player.transform.position;
+    }
+
+    // LateUpdate is called after Update each frame
+    void LateUpdate()
+    {
+        // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
+        transform.position = player.transform.position + offset;
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         //Runs when the mouse is clicked.
         if(Input.GetMouseButtonDown(0))
