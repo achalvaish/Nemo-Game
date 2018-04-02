@@ -51,7 +51,7 @@ public class SharkAI : MonoBehaviour {
             case sharkStates.Patrol:
                 Vector2 rayDirection = target.position - transform.position;
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget);
-                
+
                 if (hit)
                 {
                     if (hit.transform == target)
@@ -129,10 +129,7 @@ public class SharkAI : MonoBehaviour {
             //Calculate the distance between the previous patrol point and the new one
            
             int b = currentPatrolIndex;
-            if (a < 0)
-            {
-                b = patrolPoints.Length-1;
-            }
+
             distance = Vector3.Distance(patrolPoints[a].position, patrolPoints[b].position);
 
             //Calculate the legngth of time to cover that distance
@@ -281,16 +278,10 @@ public class SharkAI : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject);
 
         if(other.gameObject.layer == LayerMask.NameToLayer("Fish"))
         {
             other.gameObject.SetActive(false);
-        }
-        else if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
-        {
-            sharkState = sharkStates.Patrol;
-            Debug.Log("Collided with terrain");
         }
     }
 
