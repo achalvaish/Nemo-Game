@@ -79,7 +79,27 @@ public class PlayerController : MonoBehaviour {
         }
 
 
-	}
+        // X axis
+        if (transform.position.x <= -11f)
+        {
+            transform.position = new Vector2(-11f, transform.position.y);
+        }
+        else if (transform.position.x >= 9f)
+        {
+            transform.position = new Vector2(9f, transform.position.y);
+        }
+
+        // Y axis
+        if (transform.position.y <= -5f)
+        {
+            transform.position = new Vector2(transform.position.x, -5f);
+        }
+        else if (transform.position.y >= 5f)
+        {
+            transform.position = new Vector2(transform.position.x, 5f);
+        }
+
+    }
 
     //Function to find which point of the found path the player is moving towards.
     private Vector2 pathFinding()

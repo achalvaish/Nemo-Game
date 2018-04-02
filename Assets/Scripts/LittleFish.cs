@@ -103,7 +103,27 @@ public class LittleFish : MonoBehaviour {
 
         }
 
-	}
+        // X axis
+        if (transform.position.x <= -11f)
+        {
+            transform.position = new Vector2(-11f, transform.position.y);
+        }
+        else if (transform.position.x >= 9f)
+        {
+            transform.position = new Vector2(9f, transform.position.y);
+        }
+
+        // Y axis
+        if (transform.position.y <= -5f)
+        {
+            transform.position = new Vector2(transform.position.x, -5f);
+        }
+        else if (transform.position.y >= 5f)
+        {
+            transform.position = new Vector2(transform.position.x, 5f);
+        }
+
+    }
 
     //Returns the position of all the fish that are within the range to be grouped.
     private LittleFish[] getNearbyFish()

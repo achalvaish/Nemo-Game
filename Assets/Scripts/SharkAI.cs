@@ -51,28 +51,38 @@ public class SharkAI : MonoBehaviour {
             case sharkStates.Patrol:
                 Vector2 rayDirection = target.position - transform.position;
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget);
-                
-                if (hit)
-                {
-                    if (hit.transform == target)
-                    {
-                        // enemy can see the player!
-                        // Get the distance to the target and see if it is close enough to chase
-                        if (distanceToTarget < chaseRange)
-                        {
-                            sharkState = sharkStates.chaseFish;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        // there is something obstructing the view. 
-                        Patrol();
-                        break;
-                    }
-                }
 
-                break;
+                //if (hit)
+                //{
+                //    if (hit.transform == target)
+                //    {
+                //        // enemy can see the player!
+                //        // Get the distance to the target and see if it is close enough to chase
+                //        if (distanceToTarget < chaseRange)
+                //        {
+                //            sharkState = sharkStates.chaseFish;
+                //            Debug.Log("Chasing fish");
+                //            break;
+                //        }
+                //    }
+
+                //        // there is something obstructing the view. 
+                //        Patrol();
+                //        break;
+
+                //}
+                if (distanceToTarget < chaseRange)
+                {
+                    sharkState = sharkStates.chaseFish;
+                    Debug.Log("Chasing fish");
+                    break;
+                }
+        
+
+        // there is something obstructing the view. 
+        Patrol();
+        break;
+       
                
 
             // If the shark detects a fish, it will chase it
@@ -99,6 +109,26 @@ public class SharkAI : MonoBehaviour {
 
                 returnToPatrolPath();
                 break;
+        }
+
+        // X axis
+        if (transform.position.x <= -11f)
+        {
+            transform.position = new Vector2(-11f, transform.position.y);
+        }
+        else if (transform.position.x >= 9f)
+        {
+            transform.position = new Vector2(9f, transform.position.y);
+        }
+
+        // Y axis
+        if (transform.position.y <= -5f)
+        {
+            transform.position = new Vector2(transform.position.x, -5f);
+        }
+        else if (transform.position.y >= 5f)
+        {
+            transform.position = new Vector2(transform.position.x, 5f);
         }
 
     }
@@ -173,7 +203,7 @@ public class SharkAI : MonoBehaviour {
 
         // Move towards the target
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-        transform.LookAt(target);
+         //  transform.LookAt(target);
         // Figure out if target is to the left or right of the shark
         if (targetDir.x < 0f)
         {
@@ -287,11 +317,11 @@ public class SharkAI : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
         }
-        else if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
-        {
-            sharkState = sharkStates.Patrol;
-            Debug.Log("Collided with terrain");
-        }
+        //else if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+        //{
+        //    sharkState = sharkStates.Patrol;
+        //    Debug.Log("Collided with terrain");
+        //}
     }
 
 }
