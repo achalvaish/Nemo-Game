@@ -80,23 +80,23 @@ public class PlayerController : MonoBehaviour {
 
 
         // X axis
-        if (transform.position.x <= -11f)
+        if (transform.position.x <= -19f)
         {
-            transform.position = new Vector2(-11f, transform.position.y);
+            transform.position = new Vector2(-19f, transform.position.y);
         }
-        else if (transform.position.x >= 9f)
+        else if (transform.position.x >= 19f)
         {
-            transform.position = new Vector2(9f, transform.position.y);
+            transform.position = new Vector2(19f, transform.position.y);
         }
 
         // Y axis
-        if (transform.position.y <= -5f)
+        if (transform.position.y <= -10f)
         {
-            transform.position = new Vector2(transform.position.x, -5f);
+            transform.position = new Vector2(transform.position.x, -10f);
         }
-        else if (transform.position.y >= 5f)
+        else if (transform.position.y >= 10f)
         {
-            transform.position = new Vector2(transform.position.x, 5f);
+            transform.position = new Vector2(transform.position.x, 10f);
         }
 
     }

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114768250610161826}
   - component: {fileID: 50673727663639070}
   - component: {fileID: 70833762640057464}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shark 1
   m_TagString: Shark
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1189561798706418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.76, y: 2.94, z: 0}
+  m_LocalPosition: {x: -1.94, y: -5.95, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  chaseRange: 3
+  chaseRange: 10
 --- !u!212 &212023803346822594
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -50,24 +50,32 @@ public class SharkAI : MonoBehaviour {
             // If there are no fish nearby, the shark will patrol
             case sharkStates.Patrol:
                 Vector2 rayDirection = target.position - transform.position;
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1<<LayerMask.NameToLayer("Terrain"));
 
-                if (hit)
+                if(distanceToTarget < chaseRange)
                 {
-                    sharkState = sharkStates.chaseFish;
-                    Debug.Log("Chasing fish");
-                    break;
+                    if (!hit)
+                    {
+                        sharkState = sharkStates.chaseFish;
+                        break;
+                    }
                 }
-        
-
-        // there is something obstructing the view. 
-        Patrol();
-        break;
-       
+                // there is something obstructing the view. 
+                Patrol();
+                break;
                
-
+        
             // If the shark detects a fish, it will chase it
             case sharkStates.chaseFish:
+                rayDirection = target.position - transform.position;
+                hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
+
+                if(hit)
+                {
+                    calculatedPath = pathFinder.getPath(this.transform.position, currentPatrolPoint.position);
+                    pathNum = 0;
+                    sharkState = sharkStates.returnToPatrolPath;
+                }
                 if (distanceToTarget > chaseRange)
                 {
                     calculatedPath = pathFinder.getPath(this.transform.position, currentPatrolPoint.position);
@@ -81,11 +89,16 @@ public class SharkAI : MonoBehaviour {
 
             // If the shark catches the fish, it will eat it
             case sharkStates.returnToPatrolPath:
-                // Get the distance to the target and see if it is close enough to chase
+                rayDirection = target.position - transform.position;
+                hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
+
                 if (distanceToTarget < chaseRange)
                 {
-                    sharkState = sharkStates.chaseFish;
-                    break;
+                    if (!hit)
+                    {
+                        sharkState = sharkStates.chaseFish;
+                        break;
+                    }
                 }
 
                 returnToPatrolPath();
@@ -93,23 +106,23 @@ public class SharkAI : MonoBehaviour {
         }
 
         // X axis
-        if (transform.position.x <= -11f)
+        if (transform.position.x <= -19f)
         {
-            transform.position = new Vector2(-11f, transform.position.y);
+            transform.position = new Vector2(-19f, transform.position.y);
         }
-        else if (transform.position.x >= 9f)
+        else if (transform.position.x >= 19f)
         {
-            transform.position = new Vector2(9f, transform.position.y);
+            transform.position = new Vector2(19f, transform.position.y);
         }
 
         // Y axis
-        if (transform.position.y <= -5f)
+        if (transform.position.y <= -10f)
         {
-            transform.position = new Vector2(transform.position.x, -5f);
+            transform.position = new Vector2(transform.position.x, -10f);
         }
-        else if (transform.position.y >= 5f)
+        else if (transform.position.y >= 10f)
         {
-            transform.position = new Vector2(transform.position.x, 5f);
+            transform.position = new Vector2(transform.position.x, 10f);
         }
 
     }
@@ -199,7 +212,7 @@ public class SharkAI : MonoBehaviour {
 
     void returnToPatrolPath()
     {
-        if (Vector2.Distance(this.transform.position, currentPatrolPoint.position) > 0.2f)
+        if (Vector2.Distance(this.transform.position, currentPatrolPoint.position) > 1f)
         {
             Vector2 targetPosition = pathFinding();
 

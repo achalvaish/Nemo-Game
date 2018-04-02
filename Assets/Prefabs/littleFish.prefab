@@ -23,9 +23,9 @@ GameObject:
   - component: {fileID: 114131354991552966}
   - component: {fileID: 50521288342660846}
   - component: {fileID: 70668847715494860}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: littleFish
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1318608000311774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.71, y: -2.505998, z: 0}
+  m_LocalPosition: {x: -4.45, y: 4.7, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,6 +94,7 @@ MonoBehaviour:
   cohesionStrength: 0.3
   separationStength: 0.5
   alignmentStrength: 0.2
+  chaseRange: 10
 --- !u!212 &212843013032981468
 SpriteRenderer:
   m_ObjectHideFlags: 1
