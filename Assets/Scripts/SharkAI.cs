@@ -174,13 +174,13 @@ public class SharkAI : MonoBehaviour {
         // Figure out if the patrol point is to the left or right of the shark
         if (patrolPointDir.x < 0f) {
             // Get shark to face left
-            newScale = new Vector3(-0.5f, 0.5f, 1);
+            newScale = new Vector3(-0.7f, 0.7f, 1);
             transform.localScale = newScale;
         }
         if (patrolPointDir.x > 0f)
         {
             // Get shark to face right
-            newScale = new Vector3(0.5f, 0.5f, 1);
+            newScale = new Vector3(0.7f, 0.7f, 1);
             transform.localScale = newScale;
         }
     }
@@ -199,13 +199,13 @@ public class SharkAI : MonoBehaviour {
         if (targetDir.x < 0f)
         {
             // Get shark to face left
-            newScale = new Vector3(-0.5f, 0.5f, 1);
+            newScale = new Vector3(-0.7f, 0.7f, 1);
             transform.localScale = newScale;
         }
         if (targetDir.x > 0f)
         {
             // Get shark to face right
-            newScale = new Vector3(0.5f, 0.5f, 1);
+            newScale = new Vector3(0.7f, 0.7f, 1);
             transform.localScale = newScale;
         }
     }
@@ -227,13 +227,13 @@ public class SharkAI : MonoBehaviour {
             if (GetComponent<Rigidbody2D>().velocity.x < 0f)
             {
                 // Get shark to face left
-                newScale = new Vector3(-0.5f, 0.5f, 1);
+                newScale = new Vector3(-0.7f, 0.7f, 1);
                 transform.localScale = newScale;
             }
             if (GetComponent<Rigidbody2D>().velocity.x > 0f)
             {
                 // Get shark to face right
-                newScale = new Vector3(0.5f, 0.5f, 1);
+                newScale = new Vector3(0.7f, 0.7f, 1);
                 transform.localScale = newScale;
             }
           

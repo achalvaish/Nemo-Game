@@ -12,7 +12,8 @@ public class LittleFish : MonoBehaviour {
 
     private PlayerController motherFish;
     private LittleFish [] otherFish;
-    private Transform Shark;
+    private Transform shark;
+    public Transform[] sharks;
     public float chaseRange;
 
     enum fishStates
@@ -27,16 +28,19 @@ public class LittleFish : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         motherFish = FindObjectOfType<PlayerController>();
-        fishState = fishStates.searchForMother;
+        fishState = fishStates.Idle;
         randomTime = 0;
 
         otherFish = FindObjectsOfType<LittleFish>();
 
-        Shark = GameObject.FindGameObjectWithTag("Shark").transform;
+        // shark = GameObject.FindGameObjectWithTag("Shark").transform;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        shark = findClosestShark(sharks);
+        float distToMother = Vector3.Distance(this.transform.position, motherFish.transform.position);
+        float distToShark = Vector3.Distance(transform.position, shark.position);
 
         //Timer for how often fish get a new speed.
         randomTime -= Time.deltaTime;
@@ -44,20 +48,24 @@ public class LittleFish : MonoBehaviour {
         //Make the fish face the direction its travelling
         if (this.GetComponent<Rigidbody2D>().velocity.x > 0.5f)
         {
-            this.transform.localScale = new Vector3(-0.3f, 0.3f, 1);
+            this.transform.localScale = new Vector3(-0.5f, 0.5f, 1);
         }
         else if (this.GetComponent<Rigidbody2D>().velocity.x < -0.5f)
         {
-            this.transform.localScale = new Vector3(0.3f, 0.3f, 1);
+            this.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         }
-
-        float distToMother = Vector3.Distance(this.transform.position, motherFish.transform.position);
-        float distToShark = Vector3.Distance(transform.position, Shark.position);
 
         //State machine for little fish
         switch (fishState)
         {
             case fishStates.Idle:
+                if (distToMother < 1f)
+                {
+                    fishState = fishStates.followMother;
+                    this.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                    break;
+                }
+
                 Idle();
                 break;
 
@@ -82,6 +90,12 @@ public class LittleFish : MonoBehaviour {
                     break;
                 }
 
+                if (distToShark == 0)
+                {
+                    fishState = fishStates.Dead;
+                    break;
+                }
+
                 followMother();
                 break;
 
@@ -90,6 +104,12 @@ public class LittleFish : MonoBehaviour {
                 if (distToShark > chaseRange)
                 {
                     fishState = fishStates.followMother;
+                    break;
+                }
+
+                if (distToShark == 0)
+                {
+                    fishState = fishStates.Dead;
                     break;
                 }
 
@@ -208,7 +228,7 @@ public class LittleFish : MonoBehaviour {
 
     void Idle()
     {
-
+        gameObject.SetActive(true);
     }
 
     void searchForMother()
@@ -240,7 +260,7 @@ public class LittleFish : MonoBehaviour {
     void Evade()
     {
         // Find direction fish should move to get away from shark
-        Vector3 moveDirection = transform.position - Shark.transform.position;
+        Vector3 moveDirection = transform.position - shark.transform.position;
         
         // Move away from shark
         transform.Translate(moveDirection.normalized * speed * Time.deltaTime);
@@ -249,6 +269,30 @@ public class LittleFish : MonoBehaviour {
 
     void Dead()
     {
+        gameObject.SetActive(false);
+    }
 
+    Transform findClosestShark(Transform[] Sharks)
+    {
+        Transform closestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+
+        // Find the distance from the shark for each fish
+        foreach (Transform shark in sharks)
+        {
+            if (shark.gameObject.activeSelf)
+            {
+                Vector3 directionToTarget = shark.position - currentPosition;
+                float dSqrToTarget = directionToTarget.sqrMagnitude;
+                if (dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    closestTarget = shark;
+                }
+            }
+        }
+
+        return closestTarget;
     }
 }
