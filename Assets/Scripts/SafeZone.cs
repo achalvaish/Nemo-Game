@@ -22,7 +22,7 @@ public class SafeZone : MonoBehaviour {
 
     void setCountText()
     {
-        countText.text = "Count: " + count;
+        countText.text = "Score: " + count;
         if(count>=5)
         {
             winText.text = "You Win!!!";

@@ -19,7 +19,7 @@ TagManager:
   - Fish
   - MotherFish
   - Sharks
-  - 
+  - Anemone
   - 
   - 
   - 
@@ -51,4 +51,7 @@ TagManager:
     locked: 0
   - name: Fish
     uniqueID: 1097015349
+    locked: 0
+  - name: Anemone
+    uniqueID: 187238815
     locked: 0
