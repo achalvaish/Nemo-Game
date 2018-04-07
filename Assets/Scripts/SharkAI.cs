@@ -50,6 +50,7 @@ public class SharkAI : MonoBehaviour {
 
             // If there are no fish nearby, the shark will patrol
             case sharkStates.Patrol:
+                GetComponent<SpriteRenderer>().material.color = Color.white;
                 Vector2 rayDirection = target.position - transform.position;
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1<<LayerMask.NameToLayer("Terrain"));
 
@@ -68,6 +69,7 @@ public class SharkAI : MonoBehaviour {
         
             // If the shark detects a fish, it will chase it
             case sharkStates.chaseFish:
+                GetComponent<SpriteRenderer>().material.color = Color.red;
                 rayDirection = target.position - transform.position;
                 hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
 
@@ -90,6 +92,7 @@ public class SharkAI : MonoBehaviour {
 
             // If the shark catches the fish, it will eat it
             case sharkStates.returnToPatrolPath:
+                GetComponent<SpriteRenderer>().material.color = Color.white;
                 rayDirection = target.position - transform.position;
                 hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
 
@@ -217,32 +220,28 @@ public class SharkAI : MonoBehaviour {
         {
             Vector2 targetPosition = pathFinding();
 
-            Vector2 velVector = targetPosition - (Vector2)this.transform.position;
-            velVector = velVector.normalized;
-            velVector *= speed;
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            Vector3 targetDir = targetPosition - (Vector2)transform.position;
 
-
-            GetComponent<Rigidbody2D>().velocity = velVector;
             Vector3 newScale;
             // Figure out if target is to the left or right of the shark
-            if (GetComponent<Rigidbody2D>().velocity.x < 0f)
+            if (targetDir.x < 0f)
             {
                 // Get shark to face left
                 newScale = new Vector3(-0.7f, 0.7f, 1);
                 transform.localScale = newScale;
             }
-            if (GetComponent<Rigidbody2D>().velocity.x > 0f)
+            if (targetDir.x > 0f)
             {
                 // Get shark to face right
                 newScale = new Vector3(0.7f, 0.7f, 1);
                 transform.localScale = newScale;
             }
-          
+
 
         }
         else
         {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             sharkState = sharkStates.Patrol;
         }
     }

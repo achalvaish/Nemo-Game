@@ -26,6 +26,11 @@ public class PathNode
         return position;
     }
 
+    public void setPosition(Vector2 pos)
+    {
+        position = pos;
+    }
+
     public float getCost()
     {
         return cost;

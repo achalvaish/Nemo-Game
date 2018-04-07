@@ -159,6 +159,8 @@ public class PathfinderManager : MonoBehaviour {
             }
         }
 
+        currentNode.setPosition(goal);
+
         //Backtrack from the goal node
         Vector2[] calculatedPath = backtrack(currentNode);
 

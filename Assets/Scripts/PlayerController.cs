@@ -58,6 +58,13 @@ public class PlayerController : MonoBehaviour {
             Vector2 velVector = targetPosition - (Vector2)this.transform.position;
             velVector = velVector.normalized;
             velVector *= maxSpeed;
+
+            float dist = Vector2.Distance(clickPos, this.transform.position);
+
+            if (velVector.magnitude * Time.deltaTime > dist)
+            {
+                velVector.Scale(new Vector2(dist/(velVector.magnitude), dist / (velVector.magnitude * Time.deltaTime)));
+            }
             
 
             rigidBody.velocity = velVector;
