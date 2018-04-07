@@ -19,6 +19,7 @@ public class SharkAI : MonoBehaviour {
     private Transform target;
     public Transform[] fishes;
     public float chaseRange;
+    public static int deadFish;
 
     enum sharkStates
     {
@@ -306,6 +307,7 @@ public class SharkAI : MonoBehaviour {
         if(other.gameObject.layer == LayerMask.NameToLayer("Fish"))
         {
             other.gameObject.SetActive(false);
+            deadFish++;
         }
     }
 

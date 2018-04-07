@@ -8,6 +8,7 @@ public class SafeZone : MonoBehaviour {
     private int count;
     public Text countText;
     public Text winText;
+    public Transform[] fishes;
     // Use this for initialization
     void Start () {
         count = 0;
@@ -17,15 +18,23 @@ public class SafeZone : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+        
+    }
 
     void setCountText()
     {
         countText.text = "Score: " + count;
-        if(count>=5)
+        if (SharkAI.deadFish + count == fishes.Length)
         {
-            winText.text = "You Win!!!";
+            if (count >= 5)
+            {
+                winText.text = "You Win!!!";
+            }
+            else
+            {
+                winText.text = "Game Over !!!";
+            }
         }
     }
 
