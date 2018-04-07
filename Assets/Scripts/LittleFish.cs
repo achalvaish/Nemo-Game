@@ -39,8 +39,13 @@ public class LittleFish : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         shark = findClosestShark(sharks);
+        
+
         float distToMother = Vector3.Distance(this.transform.position, motherFish.transform.position);
         float distToShark = Vector3.Distance(transform.position, shark.position);
+
+        Vector2 rayDirection = shark.position - transform.position;
+        RaycastHit2D cantSeeShark = Physics2D.Raycast(transform.position, rayDirection, distToShark, 1 << LayerMask.NameToLayer("Terrain"));
 
         //Timer for how often fish get a new speed.
         randomTime -= Time.deltaTime;
@@ -72,7 +77,7 @@ public class LittleFish : MonoBehaviour {
             //While searching for mother it moves at max speed towards the mothers position.
             case fishStates.searchForMother:
 
-                if (distToShark < chaseRange)
+                if (distToShark < chaseRange && !cantSeeShark)
                 {
                     fishState = fishStates.Evade;
                     break;
@@ -90,7 +95,7 @@ public class LittleFish : MonoBehaviour {
 
             //Once it has found the mother, it moves at a more relaxed speed, following the mother.
             case fishStates.followMother:
-                if (distToShark < chaseRange)
+                if (distToShark < chaseRange && !cantSeeShark)
                 {
                     fishState = fishStates.Evade;
                     break;
@@ -302,4 +307,5 @@ public class LittleFish : MonoBehaviour {
 
         return closestTarget;
     }
+
 }
