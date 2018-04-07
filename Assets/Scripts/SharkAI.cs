@@ -42,7 +42,7 @@ public class SharkAI : MonoBehaviour {
     void Update()
     {
         target = findClosestTarget(fishes);
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+        float distanceToTarget;
         t += Time.deltaTime;
 
         switch (sharkState)
@@ -51,17 +51,24 @@ public class SharkAI : MonoBehaviour {
             // If there are no fish nearby, the shark will patrol
             case sharkStates.Patrol:
                 GetComponent<SpriteRenderer>().material.color = Color.white;
-                Vector2 rayDirection = target.position - transform.position;
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1<<LayerMask.NameToLayer("Terrain"));
 
-                if(distanceToTarget < chaseRange)
+                if (target != null)
                 {
-                    if (!hit)
+                    distanceToTarget = Vector3.Distance(transform.position, target.position);
+                    Vector2 rayDirection = target.position - transform.position;
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
+
+                    // The shark will only chase the little fish if they aren't in an idle state
+                    if (distanceToTarget < chaseRange && LittleFish.fishState != LittleFish.fishStates.Idle)
                     {
-                        sharkState = sharkStates.chaseFish;
-                        break;
+                        if (!hit)
+                        {
+                            sharkState = sharkStates.chaseFish;
+                            break;
+                        }
                     }
                 }
+
                 // there is something obstructing the view. 
                 Patrol();
                 break;
@@ -70,38 +77,49 @@ public class SharkAI : MonoBehaviour {
             // If the shark detects a fish, it will chase it
             case sharkStates.chaseFish:
                 GetComponent<SpriteRenderer>().material.color = Color.red;
-                rayDirection = target.position - transform.position;
-                hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
 
-                if(hit)
+                if (target != null)
+                {
+                    distanceToTarget = Vector3.Distance(transform.position, target.position);
+                    Vector2 rayDirection = target.position - transform.position;
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
+
+                    if (hit || distanceToTarget > chaseRange)
+                    {
+                        calculatedPath = pathFinder.getPath(this.transform.position, currentPatrolPoint.position);
+                        pathNum = 0;
+                        sharkState = sharkStates.returnToPatrolPath;
+                    }
+                }
+
+                if (target == null)
                 {
                     calculatedPath = pathFinder.getPath(this.transform.position, currentPatrolPoint.position);
                     pathNum = 0;
                     sharkState = sharkStates.returnToPatrolPath;
                 }
-                if (distanceToTarget > chaseRange)
-                {
-                    calculatedPath = pathFinder.getPath(this.transform.position, currentPatrolPoint.position);
-                    pathNum = 0;
-                    sharkState = sharkStates.returnToPatrolPath;
-                    break;
-                }
-                
+
                 chaseFish();
                 break;
 
             // If the shark catches the fish, it will eat it
             case sharkStates.returnToPatrolPath:
                 GetComponent<SpriteRenderer>().material.color = Color.white;
-                rayDirection = target.position - transform.position;
-                hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
 
-                if (distanceToTarget < chaseRange)
+                if (target != null)
                 {
-                    if (!hit)
+                    distanceToTarget = Vector3.Distance(transform.position, target.position);
+                    Vector2 rayDirection = target.position - transform.position;
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
+
+                    // The shark will only chase the little fish if they aren't in an idle state
+                    if (distanceToTarget < chaseRange && LittleFish.fishState != LittleFish.fishStates.Idle)
                     {
-                        sharkState = sharkStates.chaseFish;
-                        break;
+                        if (!hit)
+                        {
+                            sharkState = sharkStates.chaseFish;
+                            break;
+                        }
                     }
                 }
 
@@ -302,8 +320,8 @@ public class SharkAI : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
-        if(other.gameObject.layer == LayerMask.NameToLayer("Fish"))
+        // If the little fish is in an idle state it won't be eaten
+        if(other.gameObject.layer == LayerMask.NameToLayer("Fish") && LittleFish.fishState != LittleFish.fishStates.Idle)
         {
             other.gameObject.SetActive(false);
             deadFish++;
