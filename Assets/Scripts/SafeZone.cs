@@ -19,32 +19,24 @@ public class SafeZone : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
+
+        setCountText();
     }
 
     void setCountText()
     {
         countText.text = "Score: " + count;
 
-        /*if (SharkAI.deadFish + count == fishes.Length)
+        if (SharkAI.deadFish + count == fishes.Length)
         {
             if (count == 6)
             {
-                winText.text = "You win!";
+                winText.text = "You win !!!";
             }
             else
             {
-                winText.text = "Game over!";
+                winText.text = "Game over !!!";
             }
-        }*/
-
-        if (count == 6)
-        {
-            winText.text = "You Win!!!";
-        }
-        else if (SharkAI.deadFish + count == 6)
-        {
-            winText.text = "Game Over !!!";
         }
     }
 
@@ -54,7 +46,6 @@ public class SafeZone : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
             count++;
-            setCountText();
         }
     }
 }
