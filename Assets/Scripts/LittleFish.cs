@@ -71,7 +71,13 @@ public class LittleFish : MonoBehaviour {
 
             //While searching for mother it moves at max speed towards the mothers position.
             case fishStates.searchForMother:
-                
+
+                if (distToShark < chaseRange)
+                {
+                    fishState = fishStates.Evade;
+                    break;
+                }
+
                 if (distToMother < 1f)
                 {
                     fishState = fishStates.followMother;
@@ -101,9 +107,9 @@ public class LittleFish : MonoBehaviour {
 
             // If a fish is detected by a shark, it will attempt to evade the shark
             case fishStates.Evade:
-                if (distToShark > chaseRange)
+                if (distToShark > chaseRange + 2)
                 {
-                    fishState = fishStates.followMother;
+                    fishState = fishStates.searchForMother;
                     break;
                 }
 
@@ -261,8 +267,9 @@ public class LittleFish : MonoBehaviour {
     {
         // Find direction fish should move to get away from shark
         Vector3 moveDirection = transform.position - shark.transform.position;
-        
+
         // Move away from shark
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         transform.Translate(moveDirection.normalized * speed * Time.deltaTime);
 
     }
