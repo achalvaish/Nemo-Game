@@ -16,12 +16,12 @@ public class LittleFish : MonoBehaviour {
     public Transform[] sharks;
     public float chaseRange;
 
-    enum fishStates
+    public enum fishStates
     {
         Idle, searchForMother, followMother, Evade, Dead
     }
 
-    private fishStates fishState;
+    public static fishStates fishState;
     private float randomTime;
     private float randomVal;
 

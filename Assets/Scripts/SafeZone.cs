@@ -25,17 +25,27 @@ public class SafeZone : MonoBehaviour {
     void setCountText()
     {
         countText.text = "Score: " + count;
-        //if (SharkAI.deadFish + count == fishes.Length)
-        //{
+
+        /*if (SharkAI.deadFish + count == fishes.Length)
+        {
             if (count == 6)
             {
-                winText.text = "You Win!!!";
+                winText.text = "You win!";
             }
-            else if (SharkAI.deadFish + count == 6)
+            else
             {
-                winText.text = "Game Over !!!";
+                winText.text = "Game over!";
             }
-        //}
+        }*/
+
+        if (count == 6)
+        {
+            winText.text = "You Win!!!";
+        }
+        else if (SharkAI.deadFish + count == 6)
+        {
+            winText.text = "Game Over !!!";
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
