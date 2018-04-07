@@ -755,7 +755,7 @@ Prefab:
     - target: {fileID: 114768250610161826, guid: 16736d22fbf9605468744d4b4a5ad643,
         type: 2}
       propertyPath: chaseRange
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4079378904621874, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
       propertyPath: m_LocalScale.x
@@ -1017,7 +1017,7 @@ Prefab:
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
       propertyPath: chaseRange
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
@@ -1109,7 +1109,7 @@ Prefab:
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
       propertyPath: chaseRange
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
@@ -1871,7 +1871,7 @@ Prefab:
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
       propertyPath: chaseRange
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
@@ -2010,7 +2010,7 @@ Prefab:
     - target: {fileID: 114768250610161826, guid: 16736d22fbf9605468744d4b4a5ad643,
         type: 2}
       propertyPath: chaseRange
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4079378904621874, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
       propertyPath: m_LocalScale.x
@@ -2138,7 +2138,7 @@ Prefab:
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
       propertyPath: chaseRange
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
@@ -2221,7 +2221,7 @@ Prefab:
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
       propertyPath: chaseRange
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
@@ -2343,7 +2343,7 @@ GameObject:
   - component: {fileID: 1382595080}
   - component: {fileID: 1382595083}
   m_Layer: 12
-  m_Name: thumb_COLOURBOX2690984
+  m_Name: Anemone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2362,6 +2362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 1913459705}
   winText: {fileID: 448083847}
+  fishes: []
 --- !u!212 &1382595081
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2826,7 +2827,7 @@ Prefab:
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
       propertyPath: chaseRange
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
