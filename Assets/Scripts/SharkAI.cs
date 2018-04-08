@@ -89,6 +89,7 @@ public class SharkAI : MonoBehaviour {
                         calculatedPath = pathFinder.getPath(this.transform.position, currentPatrolPoint.position);
                         pathNum = 0;
                         sharkState = sharkStates.returnToPatrolPath;
+                        break;
                     }
                 }
 
@@ -97,6 +98,7 @@ public class SharkAI : MonoBehaviour {
                     calculatedPath = pathFinder.getPath(this.transform.position, currentPatrolPoint.position);
                     pathNum = 0;
                     sharkState = sharkStates.returnToPatrolPath;
+                    break;
                 }
 
                 chaseFish();

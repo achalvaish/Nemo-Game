@@ -38,8 +38,7 @@ public class LittleFish : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        shark = findClosestShark(sharks);
-        
+        shark = findClosestShark(sharks);        
 
         float distToMother = Vector3.Distance(this.transform.position, motherFish.transform.position);
         float distToShark = Vector3.Distance(transform.position, shark.position);
@@ -87,6 +86,12 @@ public class LittleFish : MonoBehaviour {
                 {
                     fishState = fishStates.followMother;
                     this.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                    break;
+                }
+
+                if (distToShark == 0)
+                {
+                    fishState = fishStates.Dead;
                     break;
                 }
 
