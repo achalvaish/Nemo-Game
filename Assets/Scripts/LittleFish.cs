@@ -18,7 +18,7 @@ public class LittleFish : MonoBehaviour {
 
     public enum fishStates
     {
-        Idle, searchForMother, followMother, Evade, Dead
+        Idle, searchForMother, followMother, Flee, Dead
     }
 
     public static fishStates fishState;
@@ -78,7 +78,7 @@ public class LittleFish : MonoBehaviour {
 
                 if (distToShark < chaseRange && !cantSeeShark)
                 {
-                    fishState = fishStates.Evade;
+                    fishState = fishStates.Flee;
                     break;
                 }
 
@@ -102,7 +102,7 @@ public class LittleFish : MonoBehaviour {
             case fishStates.followMother:
                 if (distToShark < chaseRange && !cantSeeShark)
                 {
-                    fishState = fishStates.Evade;
+                    fishState = fishStates.Flee;
                     break;
                 }
 
@@ -115,8 +115,8 @@ public class LittleFish : MonoBehaviour {
                 followMother();
                 break;
 
-            // If a fish is detected by a shark, it will attempt to evade the shark
-            case fishStates.Evade:
+            // If a fish is detected by a shark, it will attempt to flee from the shark
+            case fishStates.Flee:
                 if (distToShark > chaseRange + 2)
                 {
                     fishState = fishStates.searchForMother;
@@ -129,7 +129,7 @@ public class LittleFish : MonoBehaviour {
                     break;
                 }
 
-                Evade();
+                Flee();
                 break;
 
             // If a fish is caught by a shark, it will be eaten and is out of the game
@@ -273,7 +273,7 @@ public class LittleFish : MonoBehaviour {
         this.GetComponent<Rigidbody2D>().velocity = ((Vector2)dirVector + cohesionVec + alignmentVec + separationVec);
     }
 
-    void Evade()
+    void Flee()
     {
         // Find direction fish should move to get away from shark
         Vector3 moveDirection = transform.position - shark.transform.position;
