@@ -16,12 +16,12 @@ public class LittleFish : MonoBehaviour {
     public Transform[] sharks;
     public float chaseRange;
 
-    public enum fishStates
+    enum fishStates
     {
         Idle, searchForMother, followMother, Flee, Dead
     }
 
-    public static fishStates fishState;
+    private fishStates fishState;
     private float randomTime;
     private float randomVal;
 
@@ -311,6 +311,12 @@ public class LittleFish : MonoBehaviour {
         }
 
         return closestTarget;
+    }
+
+    // Check if the little fish is in an idle state
+    public bool isIdle()
+    {
+        return fishState == fishStates.Idle;
     }
 
 }

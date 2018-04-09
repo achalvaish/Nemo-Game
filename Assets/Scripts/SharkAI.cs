@@ -59,7 +59,7 @@ public class SharkAI : MonoBehaviour {
                     RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
 
                     // The shark will only chase the little fish if they aren't in an idle state
-                    if (distanceToTarget < chaseRange && LittleFish.fishState != LittleFish.fishStates.Idle)
+                    if (distanceToTarget < chaseRange && !target.GetComponent<LittleFish>().isIdle())
                     {
                         if (!hit)
                         {
@@ -115,7 +115,7 @@ public class SharkAI : MonoBehaviour {
                     RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, distanceToTarget, 1 << LayerMask.NameToLayer("Terrain"));
 
                     // The shark will only chase the little fish if they aren't in an idle state
-                    if (distanceToTarget < chaseRange && LittleFish.fishState != LittleFish.fishStates.Idle)
+                    if (distanceToTarget < chaseRange && !target.GetComponent<LittleFish>().isIdle())
                     {
                         if (!hit)
                         {
@@ -323,7 +323,7 @@ public class SharkAI : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         // If the little fish is in an idle state it won't be eaten
-        if(other.gameObject.layer == LayerMask.NameToLayer("Fish") && LittleFish.fishState != LittleFish.fishStates.Idle)
+        if(other.gameObject.layer == LayerMask.NameToLayer("Fish") && !target.GetComponent<LittleFish>().isIdle())
         {
             other.gameObject.SetActive(false);
             deadFish++;
