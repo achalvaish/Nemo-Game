@@ -44,7 +44,7 @@ public class SafeZone : MonoBehaviour {
     {
         if(other.gameObject.layer==LayerMask.NameToLayer("Fish"))
         {
-            other.gameObject.SetActive(false);
+            other.gameObject.GetComponent<LittleFish>().gotToGoal();
             count++;
         }
     }

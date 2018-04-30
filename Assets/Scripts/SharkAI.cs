@@ -39,11 +39,11 @@ public class SharkAI : MonoBehaviour {
 	}
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         target = findClosestTarget(fishes);
         float distanceToTarget;
-        t += Time.deltaTime;
+        t += Time.fixedDeltaTime;
 
         switch (sharkState)
         {
@@ -305,7 +305,7 @@ public class SharkAI : MonoBehaviour {
         // Find the distance from the shark for each fish
         foreach (Transform fish in fishes)
         {
-            if(fish.gameObject.activeSelf)
+            if(!fish.gameObject.GetComponent<LittleFish>().isDead() && !fish.gameObject.GetComponent<LittleFish>().isGoal() && !fish.gameObject.GetComponent<LittleFish>().isIdle())
             {
                 Vector3 directionToTarget = fish.position - currentPosition;
                 float dSqrToTarget = directionToTarget.sqrMagnitude;
@@ -323,10 +323,13 @@ public class SharkAI : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         // If the little fish is in an idle state it won't be eaten
-        if(other.gameObject.layer == LayerMask.NameToLayer("Fish") && !target.GetComponent<LittleFish>().isIdle())
+        if(other.gameObject.layer == LayerMask.NameToLayer("Fish") && other.GetComponent<LittleFish>() != null)
         {
-            other.gameObject.SetActive(false);
-            deadFish++;
+            if(!other.GetComponent<LittleFish>().isIdle())
+            {
+                other.gameObject.GetComponent<LittleFish>().setDead();
+                deadFish++;
+            }
         }
     }
 

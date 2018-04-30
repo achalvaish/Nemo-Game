@@ -18,7 +18,7 @@ public class LittleFish : MonoBehaviour {
 
     enum fishStates
     {
-        Idle, searchForMother, followMother, Flee, Dead
+        Idle, searchForMother, followMother, Flee, Dead, Goal
     }
 
     private fishStates fishState;
@@ -37,7 +37,7 @@ public class LittleFish : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         shark = findClosestShark(sharks);        
 
         float distToMother = Vector3.Distance(this.transform.position, motherFish.transform.position);
@@ -135,6 +135,11 @@ public class LittleFish : MonoBehaviour {
             // If a fish is caught by a shark, it will be eaten and is out of the game
             case fishStates.Dead:
                 Dead();
+                break;
+
+            //Made it to goal
+            case fishStates.Goal:
+                Goal();
                 break;
 
         }
@@ -286,7 +291,18 @@ public class LittleFish : MonoBehaviour {
 
     void Dead()
     {
-        gameObject.SetActive(false);
+        GetComponent<SpriteRenderer>().enabled = false;
+        return;
+    }
+
+    void Goal()
+    {
+        GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    public void gotToGoal()
+    {
+        fishState = fishStates.Goal;
     }
 
     Transform findClosestShark(Transform[] Sharks)
@@ -313,10 +329,25 @@ public class LittleFish : MonoBehaviour {
         return closestTarget;
     }
 
+    public void setDead()
+    {
+        fishState = fishStates.Dead;
+    }
+
     // Check if the little fish is in an idle state
     public bool isIdle()
     {
         return fishState == fishStates.Idle;
+    }
+
+    public bool isDead()
+    {
+        return fishState == fishStates.Dead;
+    }
+
+    public bool isGoal()
+    {
+        return fishState == fishStates.Goal;
     }
 
 }
