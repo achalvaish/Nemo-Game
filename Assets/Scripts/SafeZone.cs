@@ -20,7 +20,7 @@ public class SafeZone : MonoBehaviour {
 	void Update () {
 
 
-        setCountText();
+        //setCountText();
     }
 
     void setCountText()
@@ -42,10 +42,10 @@ public class SafeZone : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.layer==LayerMask.NameToLayer("Fish"))
+        if(other.GetComponent<MotherFish>() != null)
         {
-            other.gameObject.GetComponent<LittleFish>().gotToGoal();
-            count++;
+            other.gameObject.GetComponent<MotherFish>().safe();
+            count = other.gameObject.GetComponent<MotherFish>().numFish;
         }
     }
 }

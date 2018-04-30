@@ -8,6 +8,9 @@ public class MotherFish : MonoBehaviour {
     public float endEpsilon;
     public float endEpsilonTime;
 
+    public bool isDead;
+    public bool isSafe;
+
     public double currentActionValue; // Just for debugging
 
     public float epsilon; // Made public for debugging, shouldn't actually be set though
@@ -21,12 +24,17 @@ public class MotherFish : MonoBehaviour {
     // Store a reference to the Rigidbody2D component required to use 2D Physics.
     private Rigidbody2D rb2d;
 
+    public int numFish;
+
     // Use this for initialization
     void Start()
     {
         // Get and store a reference to the Rigidbody2D component
         // so that we can access it.
         rb2d = GetComponent<Rigidbody2D>();
+        isDead = false;
+        isSafe = false;
+        numFish = 0;
 
         action = new Vector2(0.0f, 0.0f);
     }
@@ -104,5 +112,26 @@ public class MotherFish : MonoBehaviour {
     void FixedUpdate()
     {
         rb2d.velocity = action * speed;
+    }
+
+    public void reset()
+    {
+        float Xpos = Random.Range(-6, 6);
+        float ypos = Random.Range(-6, 6);
+        isDead = false;
+        isSafe = false;
+
+        this.transform.position = new Vector2(Xpos, ypos);
+    }
+
+    public void die()
+    {
+        isDead = true;
+        numFish = 0;
+    }
+
+    public void safe()
+    {
+        isSafe = true;
     }
 }

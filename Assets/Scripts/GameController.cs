@@ -125,9 +125,9 @@ public class GameController : MonoBehaviour {
         }
         foreach(LittleFish lf in littleFish)
         {
-            result[count] = lf.transform.position.x;
+            result[count] = lf.getPos().x;
             count++;
-            result[count] = lf.transform.position.y;
+            result[count] = lf.getPos().y;
             count++;
         }
 
@@ -180,7 +180,7 @@ public class GameController : MonoBehaviour {
 
             trainingInput[sampleNum] = expItem.getStateRepresentation();
 
-            double?[] sampleTarget = new double?[] { null, null, null };
+            double?[] sampleTarget = new double?[] { null, null, null, null, null, null, null, null, null };
 
             // 1 for a win, 0 for a loss
             sampleTarget[expItem.getActionTaken()] = expItem.getResult();
@@ -211,44 +211,25 @@ public class GameController : MonoBehaviour {
 
         LittleFish [] littleFish = FindObjectsOfType<LittleFish>();
 
-        int count = 0;
-        int dead = 0;
-        int safe = 0;
         float result = -1;
 
 
-        float distToMother = 40.0f;
-        foreach (LittleFish lf in littleFish)
+        if(motherFish.isDead)
         {
-            count++;
-            if (lf.GetComponent<SpriteRenderer>().enabled == false)
-            {
-                if(lf.isDead())
-                {
-                    dead++;
-                }
-                else if(lf.isGoal())
-                {
-                    safe++;
-                }
-            }
-            else
-            {
-                float fishDist = Vector2.Distance(lf.transform.position, motherFish.transform.position);
-                if (fishDist < distToMother)
-                {
-                    distToMother = fishDist;
-                }
-            }
+            result = 0; 
+            gameOver = true;
+        }
+        else if(motherFish.isSafe)
+        {
+            result = (float)motherFish.numFish/3.0f;
+            gameOver = true;
         }
 
-        result = (float)safe / (float)count;
-
-        /*if(episodeAge >= episodeTimeout)
+        if(episodeAge >= episodeTimeout)
         {
-            result = 40.0f/ distToMother;
+            result = 0f;
             gameOver = true;
-        }*/
+        }
 
         if (gameOver)
         {
@@ -259,7 +240,7 @@ public class GameController : MonoBehaviour {
             }
             currentEpisode.Clear();
 
-            Reset();
+            reset();
         }
     }
 
@@ -274,8 +255,17 @@ public class GameController : MonoBehaviour {
         currentEpisode.Add(player1Experience);
     }
 
-    private void Reset()
+    private void reset()
     {
-        
+        FindObjectOfType<SharkAI>().reset();
+        motherFish.reset();
+
+        episodeAge = 0;
+
+        LittleFish[] littleFish = FindObjectsOfType<LittleFish>();
+        foreach(LittleFish lf in littleFish)
+        {
+            lf.reset();
+        }
     }
 }
