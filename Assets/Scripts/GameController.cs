@@ -209,8 +209,6 @@ public class GameController : MonoBehaviour {
     {
         bool gameOver = false;
 
-        LittleFish [] littleFish = FindObjectsOfType<LittleFish>();
-
         float result = -1;
 
 
@@ -221,8 +219,9 @@ public class GameController : MonoBehaviour {
         }
         else if(motherFish.isSafe)
         {
-            result = (float)motherFish.numFish/3.0f;
+            result = 0.25f + motherFish.numFish * 0.25f;
             gameOver = true;
+            Debug.Log(result);
         }
 
         if(episodeAge >= episodeTimeout)

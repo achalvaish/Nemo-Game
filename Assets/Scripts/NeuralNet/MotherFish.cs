@@ -120,6 +120,7 @@ public class MotherFish : MonoBehaviour {
         float ypos = Random.Range(-6, 6);
         isDead = false;
         isSafe = false;
+        numFish = 0;
 
         this.transform.position = new Vector2(Xpos, ypos);
     }
