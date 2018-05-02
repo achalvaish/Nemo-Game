@@ -135,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 147249}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.59, y: 6.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1457156339}
@@ -156,11 +156,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4606025449676542, guid: 2df5fe2eb8c60c845ad4bd2374a01fa8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -6.17
+      value: 1.17
       objectReference: {fileID: 0}
     - target: {fileID: 4606025449676542, guid: 2df5fe2eb8c60c845ad4bd2374a01fa8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.56
+      value: 6.32
       objectReference: {fileID: 0}
     - target: {fileID: 4606025449676542, guid: 2df5fe2eb8c60c845ad4bd2374a01fa8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -215,9 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5bd6327f9051db46b7709b9b60da594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startEpsilon: 0.8
-  endEpsilon: 0.5
-  endEpsilonTime: 60000
+  startEpsilon: 1
+  endEpsilon: 0.05
+  endEpsilonTime: 1000000
   isDead: 0
   isSafe: 0
   currentActionValue: 0
@@ -1066,11 +1066,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 197336777}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 6.4999995, y: -0.5, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 890236243}
-  m_RootOrder: 49
+  m_RootOrder: 55
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &197336779
 BoxCollider2D:
@@ -1216,7 +1216,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 214570327}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 6.74, y: 6.57, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1439,11 +1439,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4079378904621874, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.63
+      value: 4.94
       objectReference: {fileID: 0}
     - target: {fileID: 4079378904621874, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.56
+      value: 3.27
       objectReference: {fileID: 0}
     - target: {fileID: 4079378904621874, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2002,7 +2002,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 890236243}
-  m_RootOrder: 54
+  m_RootOrder: 53
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &545164412
 BoxCollider2D:
@@ -2474,7 +2474,7 @@ MonoBehaviour:
   loadNetworkName: FirstNetwork
   saveNetworkName: FirstNetwork
   timeScale: 1
-  learningRate: 0.0025
+  learningRate: 0.1
   momentum: 0.95
   framesPerAction: 2
   framesPerTrainingUpdate: 4
@@ -2922,7 +2922,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 890236243}
-  m_RootOrder: 55
+  m_RootOrder: 54
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &746367739
 BoxCollider2D:
@@ -3106,11 +3106,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.365761
+      value: 6.54
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -5.3905764
+      value: 4.49
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3276,7 +3276,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 890236243}
-  m_RootOrder: 52
+  m_RootOrder: 51
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &802458451
 BoxCollider2D:
@@ -3436,7 +3436,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 890236243}
-  m_RootOrder: 50
+  m_RootOrder: 49
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &847223506
 BoxCollider2D:
@@ -3628,7 +3628,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 890236242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.06, y: 7.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 889149242}
@@ -3680,13 +3680,13 @@ Transform:
   - {fileID: 511599446}
   - {fileID: 1352256141}
   - {fileID: 13013732}
-  - {fileID: 197336778}
   - {fileID: 847223505}
   - {fileID: 1714865969}
   - {fileID: 802458450}
   - {fileID: 1710989250}
   - {fileID: 545164411}
   - {fileID: 746367738}
+  - {fileID: 197336778}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4296,7 +4296,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1002430451}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.68, y: -5.61, z: 0}
+  m_LocalPosition: {x: 11.76, y: 1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6176,7 +6176,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 890236243}
-  m_RootOrder: 53
+  m_RootOrder: 52
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1710989251
 BoxCollider2D:
@@ -6275,7 +6275,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 890236243}
-  m_RootOrder: 51
+  m_RootOrder: 50
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1714865970
 BoxCollider2D:
@@ -6635,7 +6635,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.43062276
+      value: 9.7
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.z

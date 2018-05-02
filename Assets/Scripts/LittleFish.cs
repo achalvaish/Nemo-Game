@@ -26,6 +26,7 @@ public class LittleFish : MonoBehaviour {
     private fishStates fishState;
     private float randomTime;
     private float randomVal;
+    private bool caught;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +34,7 @@ public class LittleFish : MonoBehaviour {
         fishState = fishStates.Idle;
         randomTime = 0;
         startPos = this.transform.position;
+        caught = false;
 
         otherFish = FindObjectsOfType<LittleFish>();
 
@@ -42,18 +44,25 @@ public class LittleFish : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         motherFish.numFish++;
+        caught = true;
         this.transform.position = new Vector2(100, 100);
     }
 
     public void reset()
     {
         fishState = fishStates.Idle;
-        float Xpos = Random.Range(-6, 6);
-        float ypos = Random.Range(-6, 6);
+        caught = false;
+        float Xpos = Random.Range(1, 13);
+        float ypos = Random.Range(1, 13);
 
 
         this.transform.position = new Vector2(Xpos, ypos);
         startPos = this.transform.position;
+    }
+
+    public bool isCaught()
+    {
+        return caught;
     }
 
     public Vector2 getPos()

@@ -116,8 +116,8 @@ public class MotherFish : MonoBehaviour {
 
     public void reset()
     {
-        float Xpos = Random.Range(-6, 6);
-        float ypos = Random.Range(-6, 6);
+        float Xpos = Random.Range(1, 13);
+        float ypos = Random.Range(1, 13);
         isDead = false;
         isSafe = false;
         numFish = 0;

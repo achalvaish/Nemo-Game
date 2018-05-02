@@ -51,7 +51,9 @@ public class GameController : MonoBehaviour {
         SharkAI[] sharks = FindObjectsOfType<SharkAI>();
         LittleFish[] littleFish = FindObjectsOfType<LittleFish>();
 
-        numInputs = 2 + 2 * sharks.Length + 2 * littleFish.Length;
+
+        //mother x and y, each sharks x and y, each little fish x and y and whether it has been caught and then the goal x y
+        numInputs = 2 + 2 * sharks.Length + 3 * littleFish.Length + 2;
 
         if (loadNetworkFromFile)
         {
@@ -103,14 +105,16 @@ public class GameController : MonoBehaviour {
 
         SharkAI [] sharks = FindObjectsOfType<SharkAI>();
         LittleFish[] littleFish = FindObjectsOfType<LittleFish>();
+        SafeZone anemone = FindObjectOfType<SafeZone>();
 
         int count = 0;
 
-        double[] result = new double[2 + sharks.Length*2 + littleFish.Length*2];
+
+        double[] result = new double[numInputs];
 
         
-        double motherX = motherFish.transform.position.x;
-        double motherY = motherFish.transform.position.y;
+        double motherX = motherFish.transform.position.x/13.0f;
+        double motherY = motherFish.transform.position.y/13.0f;
 
         result[count] = motherX;
         result[count + 1] = motherY;
@@ -118,18 +122,31 @@ public class GameController : MonoBehaviour {
         count = 2;
         foreach(SharkAI s in sharks)
         {
-            result[count] = s.transform.position.x;
+            result[count] = s.transform.position.x/13.0f;
             count++;
-            result[count] = s.transform.position.y;
+            result[count] = s.transform.position.y/13.0f;
             count++;
         }
         foreach(LittleFish lf in littleFish)
         {
-            result[count] = lf.getPos().x;
+            result[count] = lf.getPos().x/13.0f;
             count++;
-            result[count] = lf.getPos().y;
+            result[count] = lf.getPos().y/13.0f;
+            count++;
+            if(lf.isCaught())
+            {
+                result[count] = 1;
+            }
+            else
+            {
+                result[count] = 0;
+            }
             count++;
         }
+
+        result[count] = anemone.transform.position.x / 13.0f;
+        count++;
+        result[count] = anemone.transform.position.y / 13.0f;
 
         return result;
     }
@@ -219,9 +236,8 @@ public class GameController : MonoBehaviour {
         }
         else if(motherFish.isSafe)
         {
-            result = 0.25f + motherFish.numFish * 0.25f;
+            result = (0.25f + motherFish.numFish * 0.25f) * (1 - (float)episodeAge/(float)episodeTimeout);
             gameOver = true;
-            Debug.Log(result);
         }
 
         if(episodeAge >= episodeTimeout)
