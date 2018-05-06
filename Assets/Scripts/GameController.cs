@@ -236,7 +236,7 @@ public class GameController : MonoBehaviour {
         }
         else if(motherFish.isSafe)
         {
-            result = (0.25f + motherFish.numFish * 0.25f) * (1 - (float)episodeAge/(float)episodeTimeout);
+            result = 1 - (float)episodeAge/(float)episodeTimeout;
             gameOver = true;
         }
 

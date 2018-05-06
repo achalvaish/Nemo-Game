@@ -44,8 +44,11 @@ public class SafeZone : MonoBehaviour {
     {
         if(other.GetComponent<MotherFish>() != null)
         {
-            other.gameObject.GetComponent<MotherFish>().safe();
-            count = other.gameObject.GetComponent<MotherFish>().numFish;
+            if(other.GetComponent<MotherFish>().numFish == 3)
+            {
+                other.gameObject.GetComponent<MotherFish>().safe();
+                count = other.gameObject.GetComponent<MotherFish>().numFish;
+            }
         }
     }
 }

@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5bd6327f9051db46b7709b9b60da594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startEpsilon: 1
+  startEpsilon: 0.05
   endEpsilon: 0.05
   endEpsilonTime: 1000000
   isDead: 0
@@ -2471,8 +2471,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadNetworkFromFile: 1
-  loadNetworkName: FirstNetwork
-  saveNetworkName: FirstNetwork
+  loadNetworkName: NoEndNet
+  saveNetworkName: NoEndNet
   timeScale: 1
   learningRate: 0.1
   momentum: 0.95
@@ -2482,7 +2482,7 @@ MonoBehaviour:
   minibatchSize: 10
   experienceCacheSize: 1000000
   learningCommenceTime: 3
-  episodeTimeout: 6000
+  episodeTimeout: 60000
 --- !u!4 &657178667
 Transform:
   m_ObjectHideFlags: 0
