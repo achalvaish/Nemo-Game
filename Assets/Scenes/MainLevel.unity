@@ -195,6 +195,10 @@ Prefab:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1674059758227776, guid: 2df5fe2eb8c60c845ad4bd2374a01fa8, type: 2}
+      propertyPath: m_TagString
+      value: agent
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114110587781784630, guid: 2df5fe2eb8c60c845ad4bd2374a01fa8, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 2df5fe2eb8c60c845ad4bd2374a01fa8, type: 2}
@@ -210,7 +214,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 7545634}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5bd6327f9051db46b7709b9b60da594, type: 3}
   m_Name: 
@@ -256,7 +260,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 7545634}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd7b6cb0f863522438f7c10067308ebd, type: 3}
   m_Name: 
@@ -1538,6 +1542,10 @@ Prefab:
       propertyPath: patrolPoints.Array.data[5]
       value: 
       objectReference: {fileID: 546540120}
+    - target: {fileID: 1189561798706418, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
+      propertyPath: m_TagString
+      value: shark
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
   m_IsPrefabParent: 0
@@ -4209,7 +4217,7 @@ GameObject:
   - component: {fileID: 1002430452}
   m_Layer: 0
   m_Name: Anemone
-  m_TagString: Untagged
+  m_TagString: goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5687,9 +5695,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1458053083}
   - component: {fileID: 1458053082}
+  - component: {fileID: 1458053084}
   m_Layer: 0
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5751,6 +5760,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1458053084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1458053081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5033494575715e645a9c18e32856a874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward: 0
+  done: 0
+  maxSteps: 0
+  currentStep: 0
+  begun: 0
+  acceptingSteps: 0
+  agent: {fileID: 0}
+  comPort: 0
+  frameToSkip: 0
+  framesSinceAction: 0
+  currentPythonCommand: 
+  skippingFrames: 0
+  actions: []
+  waitTime: 0
+  episodeCount: 1
+  humanControl: 0
+  bumper: 0
+  actorObjs: []
+  players: []
+  visualAgent: {fileID: 0}
 --- !u!1 &1486009046
 GameObject:
   m_ObjectHideFlags: 0

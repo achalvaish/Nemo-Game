@@ -5,7 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Target
-  - Shark
+  - Background
+  - agent
+  - shark
+  - goal
   layers:
   - Default
   - TransparentFX
