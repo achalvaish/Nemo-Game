@@ -91,14 +91,17 @@ public class GridEnvironment : Environment
     public override List<float> collectState()
     {
         List<float> state = new List<float>();
-        foreach (GameObject actor in actorObjs)
+        float point = (gridSize * agent.transform.position.x) + agent.transform.position.y;
+        state.Add(point);
+
+        /*foreach (GameObject actor in actorObjs)
         {
             if (actor.tag == "agent")
             {
                 float point = (gridSize * actor.transform.position.x) + actor.transform.position.z;
                 state.Add(point);
             }
-        }
+        }*/
         return state;
     }
 
@@ -126,6 +129,7 @@ public class GridEnvironment : Environment
                 visualAgent = actorObj;
             }
         }*/
+        visualAgent = GameObject.FindGameObjectWithTag("agent");
         episodeReward = 0;
         EndReset();
     }
@@ -139,49 +143,49 @@ public class GridEnvironment : Environment
         // Up
         if (action == 0)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y + 1);
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y + 1);           
         }
 
         // Up-Right
         if (action == 1)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y + 1).normalized;
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y + 1).normalized;            
         }
 
         // Right
         if (action == 2)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y);
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y);            
         }
 
         // Down-Right
         if (action == 3)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y - 1).normalized;
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y - 1).normalized;      
         }
 
         // Down
         if (action == 4)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y - 1);
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y - 1);            
         }
 
         // Down-Left
         if (action == 5)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y - 1).normalized;
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y - 1).normalized;            
         }
 
         // Left
         if (action == 6)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y);
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y);            
         }
 
         // Up-Left
         if (action == 7)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y + 1).normalized;
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y + 1).normalized;
         }
 
         // Do Nothing
@@ -190,7 +194,8 @@ public class GridEnvironment : Environment
             visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y);
         }
 
-        Collider[] hitObjects = Physics.OverlapBox(visualAgent.transform.position, new Vector3(0.3f, 0.3f, 0.3f));
+        Collider2D[] hitObjects = new Collider2D[100];
+        Physics2D.OverlapBox((Vector2)visualAgent.transform.position, new Vector2(0.3f, 0.3f), 0.0f, new ContactFilter2D(), hitObjects);
         if (hitObjects.Where(col => col.gameObject.tag == "goal").ToArray().Length == 1)
         {
             reward = 1;

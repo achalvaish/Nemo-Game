@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class MotherFishQ : MonoBehaviour {
+public class MotherFishQ : Agent {
 
     public float[][] q_table;   // The matrix containing the values estimates.
     float learning_rate = 0.5f; // The rate at which to update the value estimates given a reward.
@@ -16,17 +16,7 @@ public class MotherFishQ : MonoBehaviour {
     int lastState;
     GridEnvironment gridEnvironment;
 
-    // Use this for initialization
-    void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        
-	}
-
-    public void SendParameters(EnvironmentParameters env)
+    public override void SendParameters(EnvironmentParameters env)
     {
         q_table = new float[env.state_size][];
         action = 0;
@@ -42,7 +32,7 @@ public class MotherFishQ : MonoBehaviour {
 
     // Picks an action to take from its current state
     // Returns the action choosen by the agent's policy
-    public float[] GetAction()
+    public override float[] GetAction()
     {
         action = q_table[lastState].ToList().IndexOf(q_table[lastState].Max());
         if (Random.Range(0f, 1f) < e) { action = Random.Range(0, 3); }
@@ -54,7 +44,7 @@ public class MotherFishQ : MonoBehaviour {
     }
 
     // Gets the values stored within the Q table
-    public float[] GetValue()
+    public override float[] GetValue()
     {
         float[] value_table = new float[q_table.Length];
         for (int i = 0; i < q_table.Length; i++)
@@ -68,7 +58,7 @@ public class MotherFishQ : MonoBehaviour {
     // state = the environment state the experience happened in
     // reward = the reward recieved by the agent from the environment for it's action
     // done = whether the episode has ended
-    public void SendState(List<float> state, float reward, bool done)
+    public override void SendState(List<float> state, float reward, bool done)
     {
         int nextState = Mathf.FloorToInt(state.First());
         if (action != -1)

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class Agent
+public class Agent : MonoBehaviour
 {
     public virtual void SendParameters(EnvironmentParameters env)
     {
