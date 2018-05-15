@@ -18,10 +18,10 @@ public abstract class Environment : MonoBehaviour
 {
     public float reward;
     public bool done;
-    public int maxSteps;
-    public int currentStep;
+    //public int maxSteps;
+    //public int currentStep;
     public bool begun;
-    public bool acceptingSteps;
+   // public bool acceptingSteps;
 
     public Agent agent;
     public int comPort;
@@ -30,12 +30,9 @@ public abstract class Environment : MonoBehaviour
     public string currentPythonCommand;
     public bool skippingFrames;
     public float[] actions;
-    public float waitTime;
+    //public float waitTime;
     public int episodeCount;
-    public bool humanControl;
-
-    public int bumper;
-
+    
     public EnvironmentParameters envParameters;
 
     public virtual void SetUp()
@@ -52,7 +49,6 @@ public abstract class Environment : MonoBehaviour
             num_agents = 1
         };
         begun = false;
-        acceptingSteps = true;
     }
 
     // Update is called once per frame
@@ -69,21 +65,13 @@ public abstract class Environment : MonoBehaviour
 
     public virtual void Step()
     {
-        acceptingSteps = false;
-        currentStep += 1;
-        if (currentStep >= maxSteps)
-        {
-            done = true;
-        }
-
         reward = 0;
         actions = agent.GetAction();
         framesSinceAction = 0;
 
         int sendAction = Mathf.FloorToInt(actions[0]);
         MiddleStep(sendAction);
-
-        StartCoroutine(WaitStep());
+        EndStep();
     }
 
     public virtual void MiddleStep(int action)
@@ -96,49 +84,38 @@ public abstract class Environment : MonoBehaviour
 
     }
 
-    public IEnumerator WaitStep()
-    {
-        yield return new WaitForSeconds(waitTime);
-        EndStep();
-    }
-
     public virtual void EndStep()
     {
         agent.SendState(collectState(), reward, done);
         skippingFrames = false;
-        acceptingSteps = true;
     }
 
     public virtual void Reset()
     {
         reward = 0;
-        currentStep = 0;
         episodeCount++;
+        Debug.Log("Episode count" + episodeCount);
         done = false;
-        acceptingSteps = false;
     }
 
     public virtual void EndReset()
     {
         agent.SendState(collectState(), reward, done);
         skippingFrames = false;
-        acceptingSteps = true;
         begun = true;
         framesSinceAction = 0;
     }
 
     public virtual void RunMdp()
     {
-        if (acceptingSteps == true)
+        if (done == false)
         {
-            if (done == false)
-            {
-                Step();
-            }
-            else
-            {
-                Reset();
-            }
+            Step();
+        }
+        else
+        {
+            Reset();
+            Debug.Log("End episode");
         }
     }
 }

@@ -9,6 +9,8 @@ TagManager:
   - agent
   - shark
   - goal
+  - terrain
+  - fish
   layers:
   - Default
   - TransparentFX

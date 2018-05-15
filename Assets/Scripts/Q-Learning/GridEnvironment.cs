@@ -18,8 +18,6 @@ public class GridEnvironment : Environment
 
     void Start()
     {
-        maxSteps = 100;
-        waitTime = 0.001f;
         BeginNewGame();
     }
 
@@ -94,18 +92,10 @@ public class GridEnvironment : Environment
         float point = (gridSize * agent.transform.position.x) + agent.transform.position.y;
         state.Add(point);
 
-        /*foreach (GameObject actor in actorObjs)
-        {
-            if (actor.tag == "agent")
-            {
-                float point = (gridSize * actor.transform.position.x) + actor.transform.position.z;
-                state.Add(point);
-            }
-        }*/
         return state;
     }
 
-    // Resets the episode by placing the objects in their original positions
+    // Resets the episode
     public override void Reset()
     {
         base.Reset();
@@ -114,21 +104,7 @@ public class GridEnvironment : Environment
         {
             DestroyImmediate(actor);
         }
-        actorObjs = new List<GameObject>();
-
-        /*for (int i = 0; i < players.Length; i++)
-        {
-            int x = (objectPositions[i]) / gridSize;
-            int y = (objectPositions[i]) % gridSize;
-            GameObject actorObj = (GameObject)GameObject.Instantiate(Resources.Load(players[i]));
-            actorObj.transform.position = new Vector3(x, 0.0f, y);
-            actorObj.name = players[i];
-            actorObjs.Add(actorObj);
-            if (players[i] == "agent")
-            {
-                visualAgent = actorObj;
-            }
-        }*/
+        
         visualAgent = GameObject.FindGameObjectWithTag("agent");
         episodeReward = 0;
         EndReset();
@@ -138,54 +114,88 @@ public class GridEnvironment : Environment
     public override void MiddleStep(int action)
     {
         reward = -0.05f;
-        // 0 - Up, 1 - Up-Right, 2 - Right, 3 - Down-Right, 4 - Down, 5 - Down-Left, 6 - Left, 7 - Up-Left, 8 - Do Nothing
         
+        // 0 - Up, 1 - Up-Right, 2 - Right, 3 - Down-Right, 4 - Down, 5 - Down-Left, 6 - Left, 7 - Up-Left, 8 - Do Nothing
         // Up
         if (action == 0)
         {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y + 1);           
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y + 1), new Vector2(0.3f, 0.3f), 0.0f);
+            if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
+            {
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y + 1);
+            }                          
         }
 
         // Up-Right
         if (action == 1)
         {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y + 1).normalized;            
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y + 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
+            if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
+            {
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y + 1).normalized;
+            }
+                            
         }
 
         // Right
         if (action == 2)
         {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y);            
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y), new Vector2(0.3f, 0.3f), 0.0f);
+            if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
+            {
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y);
+            }
+                           
         }
 
         // Down-Right
         if (action == 3)
         {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y - 1).normalized;      
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y - 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
+            if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
+            {
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y - 1).normalized;
+            }      
         }
 
         // Down
         if (action == 4)
         {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y - 1);            
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y - 1), new Vector2(0.3f, 0.3f), 0.0f);
+            if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
+            {
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y - 1);
+            }    
         }
 
         // Down-Left
         if (action == 5)
         {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y - 1).normalized;            
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y - 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
+            if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
+            {
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y - 1).normalized;
+            }
         }
 
         // Left
         if (action == 6)
         {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y);            
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y), new Vector2(0.3f, 0.3f), 0.0f);
+            if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
+            {
+                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y);
+            }   
         }
 
         // Up-Left
         if (action == 7)
         {
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y + 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
+            if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
+            {
                 visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y + 1).normalized;
+            }
         }
 
         // Do Nothing
@@ -194,25 +204,32 @@ public class GridEnvironment : Environment
             visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y);
         }
 
-        Collider2D[] hitObjects = new Collider2D[100];
-        Physics2D.OverlapBox((Vector2)visualAgent.transform.position, new Vector2(0.3f, 0.3f), 0.0f, new ContactFilter2D(), hitObjects);
-        if (hitObjects.Where(col => col.gameObject.tag == "goal").ToArray().Length == 1)
+        // If the agent finds the goal
+        if (visualAgent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("goal").GetComponent<Collider2D>()))
         {
             reward = 1;
+            Debug.Log("Goal reward");
             done = true;
         }
-        if (hitObjects.Where(col => col.gameObject.tag == "shark").ToArray().Length == 1)
+        // If the agent hits the shark
+        if (visualAgent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("shark").GetComponent<Collider2D>()))
         {
             reward = -1;
+            Debug.Log("Shark reward");
             done = true;
         }
-        if (hitObjects.Where(col => col.gameObject.tag == "fish").ToArray().Length == 1)
+        // If the agent finds a fish
+        if (visualAgent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("fish").GetComponent<Collider2D>()))
         {
-            reward = 0.5f;
+            reward = 1;
+            Debug.Log("Fish reward");
         }
-        
+
         episodeReward += reward;
-        // GameObject.Find("RTxt").GetComponent<Text>().text = "Episode Reward: " + episodeReward.ToString("F2");
+        if (done == true)
+        {
+            Debug.Log("Episode reward " + episodeReward);
+        }
 
     }
 }
