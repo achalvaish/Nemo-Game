@@ -109,6 +109,34 @@ public class MotherFish : MonoBehaviour {
         return bestAction;
     }
 
+    public int UpdateGoal(NeuralNet net, double[] stateRepresentation, int framesSinceLearningCommenced)
+    {
+        epsilon = Mathf.Lerp(startEpsilon, endEpsilon, Mathf.Clamp(framesSinceLearningCommenced / endEpsilonTime, 0.0f, 1.0f));
+
+        int bestGoal = -1;
+
+        if (Random.Range(0.0f, 1.0f) < epsilon)
+        {
+            bestGoal = Random.Range(0, 4);
+        }
+        else
+        {
+            double[] netOutput = net.Forward(stateRepresentation);
+            double maxOutput = double.MinValue;
+
+            for (int i = 0; i < netOutput.Length; i++)
+            {
+                if (netOutput[i] > maxOutput)
+                {
+                    bestGoal = i;
+                    maxOutput = netOutput[i];
+                }
+            }
+        }
+
+        return bestGoal;
+    }
+
     void Update()
     {
         rb2d.velocity = action * speed;

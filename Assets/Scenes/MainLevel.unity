@@ -2471,18 +2471,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadNetworkFromFile: 1
-  loadNetworkName: lowerNet
-  saveNetworkName: lowerNet
+  loadLowerNetworkName: lowerNet
+  saveLowerNetworkName: lowerNet
+  loadHigherNetworkName: higherNet
+  saveHigherNetworkName: higherNet
   timeScale: 1
   learningRate: 0.25
   momentum: 0.95
   framesPerAction: 2
   framesPerTrainingUpdate: 4
-  framesPerNetworkSave: 100000
+  framesPerNetworkSave: 100
   minibatchSize: 24
-  experienceCacheSize: 1000000
+  lowerExperienceCacheSize: 1000000
   learningCommenceTime: 3
-  episodeTimeout: 240
+  higherExperienceCacheSize: 1000000
+  episodeTimeout: 6000
+  goalLoc: {x: 0, y: 0}
 --- !u!4 &657178667
 Transform:
   m_ObjectHideFlags: 0
@@ -3402,7 +3406,7 @@ Prefab:
       objectReference: {fileID: 1013754848}
     - target: {fileID: 1318608000311774, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
@@ -4206,7 +4210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1002430452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6681,7 +6685,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1318608000311774, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
