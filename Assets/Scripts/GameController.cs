@@ -53,7 +53,7 @@ public class GameController : MonoBehaviour {
 
 
         //mother x and y, each sharks x and y, each little fish x and y and whether it has been caught and then the goal x y
-        numInputs = 2 + 2 * sharks.Length + 3 * littleFish.Length + 2;
+        numInputs = 2 + 2 * sharks.Length + 2 * littleFish.Length;
 
         if (loadNetworkFromFile)
         {
@@ -127,31 +127,15 @@ public class GameController : MonoBehaviour {
             result[count] = s.transform.position.y/13.0f;
             count++;
         }
-        foreach(LittleFish lf in littleFish)
-        {
-            result[count] = lf.getPos().x/13.0f;
-            count++;
-            result[count] = lf.getPos().y/13.0f;
-            count++;
-            if(lf.isCaught())
-            {
-                result[count] = 1;
-            }
-            else
-            {
-                result[count] = 0;
-            }
-            count++;
-        }
 
-        result[count] = anemone.transform.position.x / 13.0f;
+        result[count] = littleFish[0].getPos().x/13.0f;
         count++;
-        result[count] = anemone.transform.position.y / 13.0f;
+        result[count] = littleFish[0].getPos().y/13.0f;
 
         return result;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         frameNum++;
         episodeAge++;
@@ -238,6 +222,7 @@ public class GameController : MonoBehaviour {
         {
             result = 1 - (float)episodeAge/(float)episodeTimeout;
             gameOver = true;
+            Debug.Log(result);
         }
 
         if(episodeAge >= episodeTimeout)

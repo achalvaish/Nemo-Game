@@ -34,14 +34,19 @@ public class SharkAI : MonoBehaviour {
         currentPatrolIndex = 0;
         currentPatrolPoint = patrolPoints[currentPatrolIndex];
         pathFinder = FindObjectOfType<PathfinderManager>();
-       
-       sharkState = sharkStates.Patrol;
+
+        distance = Vector3.Distance(patrolPoints[0].position, patrolPoints[1].position);
+
+        //Calculate the legngth of time to cover that distance
+        maxT = distance / speed;
+
+        sharkState = sharkStates.Patrol;
 	}
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        t += Time.fixedDeltaTime;
+        t += Time.deltaTime;
 
         switch (sharkState)
         {
@@ -60,9 +65,9 @@ public class SharkAI : MonoBehaviour {
     {
         
         // Check if shark has reached patrol point
-        if (Vector3.Distance(transform.position, currentPatrolPoint.position) < 1f)
+        if (t>= maxT)
         {
-
+            t -= maxT;
             int a = currentPatrolIndex;
 
             // Shark has reached the patrol point - get the next one

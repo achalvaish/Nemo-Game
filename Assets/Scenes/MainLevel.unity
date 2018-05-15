@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5bd6327f9051db46b7709b9b60da594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startEpsilon: 0.05
+  startEpsilon: 0.5
   endEpsilon: 0.05
   endEpsilonTime: 1000000
   isDead: 0
@@ -1430,7 +1430,7 @@ Prefab:
     - target: {fileID: 114768250610161826, guid: 16736d22fbf9605468744d4b4a5ad643,
         type: 2}
       propertyPath: fishes.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114768250610161826, guid: 16736d22fbf9605468744d4b4a5ad643,
         type: 2}
@@ -1467,7 +1467,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4079378904621874, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4079378904621874, guid: 16736d22fbf9605468744d4b4a5ad643, type: 2}
       propertyPath: m_LocalScale.x
@@ -1486,7 +1486,7 @@ Prefab:
         type: 2}
       propertyPath: fishes.Array.data[0]
       value: 
-      objectReference: {fileID: 843259577}
+      objectReference: {fileID: 765748062}
     - target: {fileID: 114768250610161826, guid: 16736d22fbf9605468744d4b4a5ad643,
         type: 2}
       propertyPath: fishes.Array.data[1]
@@ -2471,18 +2471,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadNetworkFromFile: 1
-  loadNetworkName: NoEndNet
-  saveNetworkName: NoEndNet
+  loadNetworkName: lowerNet
+  saveNetworkName: lowerNet
   timeScale: 1
-  learningRate: 0.1
+  learningRate: 0.25
   momentum: 0.95
   framesPerAction: 2
   framesPerTrainingUpdate: 4
   framesPerNetworkSave: 100000
-  minibatchSize: 10
+  minibatchSize: 24
   experienceCacheSize: 1000000
   learningCommenceTime: 3
-  episodeTimeout: 60000
+  episodeTimeout: 240
 --- !u!4 &657178667
 Transform:
   m_ObjectHideFlags: 0
@@ -2694,7 +2694,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705260793
 GameObject:
@@ -3134,7 +3134,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114131354991552966, guid: 95afeafebe170a349bec0d5b05a56d45,
         type: 2}
@@ -3389,7 +3389,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1318608000311774, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_Name
@@ -3400,6 +3400,10 @@ Prefab:
       propertyPath: sharks.Array.data[0]
       value: 
       objectReference: {fileID: 1013754848}
+    - target: {fileID: 1318608000311774, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
   m_IsPrefabParent: 0
@@ -4202,7 +4206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1002430452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6659,7 +6663,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1318608000311774, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_Name
@@ -6674,6 +6678,10 @@ Prefab:
         type: 2}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1318608000311774, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}

@@ -109,7 +109,7 @@ public class MotherFish : MonoBehaviour {
         return bestAction;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         rb2d.velocity = action * speed;
     }

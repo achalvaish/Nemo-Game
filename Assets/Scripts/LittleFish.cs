@@ -44,6 +44,7 @@ public class LittleFish : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         motherFish.numFish++;
+        motherFish.safe();
         caught = true;
         this.transform.position = new Vector2(100, 100);
     }
