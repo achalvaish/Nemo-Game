@@ -48,6 +48,9 @@ public class GameController : MonoBehaviour {
     private int higherNetInputs;
     private int higherNetOutputs;
 
+    private float goalTimer;
+    public float goalTimeout;
+
     public Vector2 goalLoc;
 
     // Use this for initialization
@@ -55,6 +58,7 @@ public class GameController : MonoBehaviour {
 
         frameNum = 0;
         episodeAge = 0;
+        goalTimer = 0;
 
         lowerExperienceCache = new ArrayList();
         lowerNetEpisode = new ArrayList();
@@ -154,6 +158,7 @@ public class GameController : MonoBehaviour {
     {
 
         SharkAI shark = FindObjectOfType<SharkAI>();
+        LittleFish[] littleFish = FindObjectsOfType<LittleFish>();
 
         int count = 0;
 
@@ -175,9 +180,9 @@ public class GameController : MonoBehaviour {
         count++;
 
         //Third inputs are position of the target goal
-        result[count] = goalLoc.x/13.0f;
-        count++;
-        result[count] = goalLoc.y/13.0f;
+         result[count] = goalLoc.x;
+         count++;
+         result[count] = goalLoc.y;
 
         return result;
     }
@@ -208,7 +213,7 @@ public class GameController : MonoBehaviour {
         result[count] = shark.transform.position.y / 13.0f;
         count++;
 
-        //Third inputs are position of all the little fish and whether they have been caught (4,5, 6,7, 8,9)
+        //Third inputs are position of all the little fish and whether they have been caught (4,5,6, 7,8,9, 10,11,12)
         foreach(LittleFish lf in littlefish)
         {
             result[count] = lf.getPos().x / 13.0f;
@@ -226,7 +231,7 @@ public class GameController : MonoBehaviour {
             count++;
         }
 
-        //Fourth inputs are position of anemone (10,11)
+        //Fourth inputs are position of anemone (13,14)
         result[count] = anemone.transform.position.x / 13.0f;        
         count++;
         result[count] = anemone.transform.position.y / 13.0f;
@@ -239,6 +244,7 @@ public class GameController : MonoBehaviour {
     {
         frameNum++;
         episodeAge++;
+        goalTimer += Time.deltaTime;
 
         // Update the time scale if it's been changed in the inspector
         if (timeScale > 0.0f)
@@ -265,8 +271,10 @@ public class GameController : MonoBehaviour {
         }
 
         //Check if goal is reached
-        if(Vector2.Distance(motherFish.transform.position, goalLoc)  < 1)
+        if(Vector2.Distance(motherFish.transform.position, new Vector2(goalLoc.x*13.0f, goalLoc.y * 13.0f))  < 0.5 || goalTimer > goalTimeout)
         {
+            Debug.Log("goal updated");
+            goalTimer = 0;
             GetNewGoal();
         }
 
@@ -379,13 +387,13 @@ public class GameController : MonoBehaviour {
                 expItem.SetResult(result);
                 AddExperienceToLowerCache(expItem);
             }
-
-            foreach(Experience expItem in higherNetEpisode)
+            foreach (Experience expItem in higherNetEpisode)
             {
                 expItem.SetResult(result);
                 AddExperienceToHigherCache(expItem);
             }
             lowerNetEpisode.Clear();
+            higherNetEpisode.Clear();
 
             reset();
         }
@@ -402,7 +410,7 @@ public class GameController : MonoBehaviour {
         lowerNetEpisode.Add(player1Experience);
     }
 
-    private void GetNewGoal()
+    public void GetNewGoal()
     {
         double[] playerStateRep = GetHigherStateRepresentation();
 
@@ -414,13 +422,13 @@ public class GameController : MonoBehaviour {
                 goalLoc = new Vector2((float)playerStateRep[4], (float)playerStateRep[5]);
                 break;
             case 1:
-                goalLoc = new Vector2((float)playerStateRep[6], (float)playerStateRep[7]);
+                goalLoc = new Vector2((float)playerStateRep[7], (float)playerStateRep[8]);
                 break;
             case 2:
-                goalLoc = new Vector2((float)playerStateRep[8], (float)playerStateRep[9]);
+                goalLoc = new Vector2((float)playerStateRep[10], (float)playerStateRep[11]);
                 break;
             case 3:
-                goalLoc = new Vector2((float)playerStateRep[10], (float)playerStateRep[11]);
+                goalLoc = new Vector2((float)playerStateRep[13], (float)playerStateRep[14]);
                 break;
         }
 

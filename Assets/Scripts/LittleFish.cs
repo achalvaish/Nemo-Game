@@ -18,6 +18,8 @@ public class LittleFish : MonoBehaviour {
 
     public Vector2 startPos;
 
+    private GameController gc;
+
     enum fishStates
     {
         Idle, searchForMother, followMother, Flee, Dead, Goal
@@ -37,6 +39,7 @@ public class LittleFish : MonoBehaviour {
         caught = false;
 
         otherFish = FindObjectsOfType<LittleFish>();
+        gc = FindObjectOfType<GameController>();
 
         // shark = GameObject.FindGameObjectWithTag("Shark").transform;
 	}
@@ -44,8 +47,8 @@ public class LittleFish : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         motherFish.numFish++;
-        motherFish.safe();
         caught = true;
+        gc.GetNewGoal();
         this.transform.position = new Vector2(100, 100);
     }
 

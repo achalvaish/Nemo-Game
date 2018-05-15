@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MotherFish : MonoBehaviour {
 
-    public float startEpsilon;
-    public float endEpsilon;
+    public float startLowerEpsilon;
+    public float endLowerEpsilon;
+    public float startHigherEpsilon;
+    public float endHigherEpsilon;
     public float endEpsilonTime;
 
     public bool isDead;
@@ -13,7 +15,8 @@ public class MotherFish : MonoBehaviour {
 
     public double currentActionValue; // Just for debugging
 
-    public float epsilon; // Made public for debugging, shouldn't actually be set though
+    public float lowerEpsilon; // Made public for debugging, shouldn't actually be set though
+    public float higherEpsilon; // Made public for debugging, shouldn't actually be set though
 
     private Vector2 action;
 
@@ -41,11 +44,11 @@ public class MotherFish : MonoBehaviour {
 
     public int UpdateAction(NeuralNet net, double[] stateRepresentation, int framesSinceLearningCommenced)
     {
-        epsilon = Mathf.Lerp(startEpsilon, endEpsilon, Mathf.Clamp(framesSinceLearningCommenced / endEpsilonTime, 0.0f, 1.0f));
+        lowerEpsilon = Mathf.Lerp(startLowerEpsilon, endLowerEpsilon, Mathf.Clamp(framesSinceLearningCommenced / endEpsilonTime, 0.0f, 1.0f));
 
         int bestAction = -1;
 
-        if (Random.Range(0.0f, 1.0f) < epsilon)
+        if (Random.Range(0.0f, 1.0f) < lowerEpsilon)
         {
             bestAction = Random.Range(0, 9);
         }
@@ -111,11 +114,11 @@ public class MotherFish : MonoBehaviour {
 
     public int UpdateGoal(NeuralNet net, double[] stateRepresentation, int framesSinceLearningCommenced)
     {
-        epsilon = Mathf.Lerp(startEpsilon, endEpsilon, Mathf.Clamp(framesSinceLearningCommenced / endEpsilonTime, 0.0f, 1.0f));
+        higherEpsilon = Mathf.Lerp(startHigherEpsilon, endHigherEpsilon, Mathf.Clamp(framesSinceLearningCommenced / endEpsilonTime, 0.0f, 1.0f));
 
         int bestGoal = -1;
 
-        if (Random.Range(0.0f, 1.0f) < epsilon)
+        if (Random.Range(0.0f, 1.0f) < higherEpsilon)
         {
             bestGoal = Random.Range(0, 4);
         }

@@ -215,13 +215,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5bd6327f9051db46b7709b9b60da594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startEpsilon: 0.5
-  endEpsilon: 0.05
+  startLowerEpsilon: 0.05
+  endLowerEpsilon: 0.05
+  startHigherEpsilon: 1
+  endHigherEpsilon: 0.05
   endEpsilonTime: 1000000
   isDead: 0
   isSafe: 0
   currentActionValue: 0
-  epsilon: 0
+  lowerEpsilon: 0
+  higherEpsilon: 0
   speed: 5
   maxYposition: 0
   numFish: 0
@@ -2480,12 +2483,13 @@ MonoBehaviour:
   momentum: 0.95
   framesPerAction: 2
   framesPerTrainingUpdate: 4
-  framesPerNetworkSave: 100
+  framesPerNetworkSave: 1000000
   minibatchSize: 24
   lowerExperienceCacheSize: 1000000
   learningCommenceTime: 3
   higherExperienceCacheSize: 1000000
   episodeTimeout: 6000
+  goalTimeout: 6
   goalLoc: {x: 0, y: 0}
 --- !u!4 &657178667
 Transform:
