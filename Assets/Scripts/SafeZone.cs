@@ -27,7 +27,7 @@ public class SafeZone : MonoBehaviour {
     {
         countText.text = "Score: " + count;
 
-        if (SharkAI.deadFish + count == fishes.Length)
+        /*if (SharkAI.deadFish + count == fishes.Length)
         {
             if (count == 6)
             {
@@ -37,7 +37,7 @@ public class SafeZone : MonoBehaviour {
             {
                 winText.text = "Game over !!!";
             }
-        }
+        }*/
     }
 
     private void OnTriggerEnter2D(Collider2D other)

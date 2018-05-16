@@ -127,7 +127,7 @@ public class GameController : MonoBehaviour {
             result[count] = s.transform.position.y/13.0f;
             count++;
         }
-        foreach(LittleFish lf in littleFish)
+        /*foreach(LittleFish lf in littleFish)
         {
             result[count] = lf.getPos().x/13.0f;
             count++;
@@ -142,7 +142,7 @@ public class GameController : MonoBehaviour {
                 result[count] = 0;
             }
             count++;
-        }
+        }*/
 
         result[count] = anemone.transform.position.x / 13.0f;
         count++;

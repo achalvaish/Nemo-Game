@@ -37,9 +37,7 @@ public class MotherFishQ : Agent {
         action = q_table[lastState].ToList().IndexOf(q_table[lastState].Max());
         if (Random.Range(0f, 1f) < e) { action = Random.Range(0, 3); }
         if (e > eMin) { e = e - ((1f - eMin) / (float)annealingSteps); }
-        // GameObject.Find("ETxt").GetComponent<Text>().text = "Epsilon: " + e.ToString("F2");
         float currentQ = q_table[lastState][action];
-        // GameObject.Find("QTxt").GetComponent<Text>().text = "Current Q-value: " + currentQ.ToString("F2");
         return new float[1] { action };
     }
 

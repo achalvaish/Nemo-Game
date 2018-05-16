@@ -11,12 +11,10 @@ public class GridEnvironment : Environment
     public List<GameObject> actorObjs;
     public string[] players;
     public GameObject visualAgent;
-    int numGoals;
-    int numFish;
-    int numSharks;
     int gridSize;
     int[] objectPositions;
     float episodeReward;
+    int fishCount;
 
     void Start()
     {
@@ -26,18 +24,8 @@ public class GridEnvironment : Environment
     // Restarts the learning process with a new grid
     public void BeginNewGame()
     {
-        numGoals = 1;
-        numFish = 3;
-        numSharks = 1;
         gridSize = 13;
-
-        if (actorObjs != null)
-        {
-            foreach (GameObject actor in actorObjs)
-            {
-                DestroyImmediate(actor);
-            }
-        }
+        fishCount = 0;
 
         WipeFile();
         SetUp();
@@ -61,25 +49,6 @@ public class GridEnvironment : Environment
             state_space_type = "discrete",
             num_agents = 1
         };
-
-        List<string> playersList = new List<string>();
-        actorObjs = new List<GameObject>();
-        playersList.Add("agent");
-        for (int i = 0; i < numGoals; i++)
-        {
-            playersList.Add("goal");
-        }
-        for (int i = 0; i < numFish; i++)
-        {
-            playersList.Add("fish");
-        }
-        for (int i = 0; i < numSharks; i++)
-        {
-            playersList.Add("shark");
-        }
-
-        players = playersList.ToArray();
-
     }
 
     // Update is called once per frame
@@ -109,7 +78,9 @@ public class GridEnvironment : Environment
         }
         
         visualAgent = GameObject.FindGameObjectWithTag("agent");
+        visualAgent.transform.position = new Vector2(1.0f, 1.0f);
         episodeReward = 0;
+        fishCount = 0;
         EndReset();
     }
 
@@ -222,21 +193,30 @@ public class GridEnvironment : Environment
             Debug.Log("Goal reward");
             done = true;
         }
+
         // If the agent hits the shark
         if (visualAgent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("shark").GetComponent<Collider2D>()))
         {
             reward = -1;
             Debug.Log("Shark reward");
             done = true;
+
         }
+
         // If the agent finds a fish
-        if (visualAgent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("fish").GetComponent<Collider2D>()))
+        GameObject[] littleFish = GameObject.FindGameObjectsWithTag("fish");
+        foreach (GameObject fish in littleFish)
         {
-            reward = 1;
-            Debug.Log("Fish reward");
+            if (visualAgent.GetComponent<Collider2D>().IsTouching(fish.GetComponent<Collider2D>()))
+            {
+                reward = 1;
+                fishCount++;
+                Debug.Log("Fish reward");
+            }
         }
 
         episodeReward += reward;
+
         if (done == true)
         {
             Debug.Log("Episode reward " + episodeReward);
@@ -250,7 +230,7 @@ public class GridEnvironment : Environment
 
         //Write the episode number and reward to the results.txt file
         StreamWriter writer = new StreamWriter(path, true);
-        writer.WriteLine((episodeCount - 1) + "\t" + episodeReward);
+        writer.WriteLine((episodeCount - 1) + "\t" + episodeReward + "\t " + fishCount);
         writer.Close();
 
         //Re-import the file to update the reference in the editor
@@ -264,7 +244,7 @@ public class GridEnvironment : Environment
 
         //Erase the text in the results.txt file from the previous game
         StreamWriter writer = new StreamWriter(path, false);
-        writer.WriteLine("Episode Reward");
+        writer.WriteLine("Episode Reward \t Fish");
         writer.Close();
 
         //Re-import the file to update the reference in the editor

@@ -16,44 +16,21 @@ public class SharkAI : MonoBehaviour {
     private Vector2 [] calculatedPath;
     private int pathNum = 0;
 
-    private Transform target;
-    public Transform[] fishes;
-    public float chaseRange;
-    public static int deadFish;
-
-    enum sharkStates
-    {
-        Patrol, chaseFish, returnToPatrolPath
-    }
-
-    private sharkStates sharkState;
-
     // Use this for initialization
     void Start () {
         this.transform.position = patrolPoints[0].transform.position;
         currentPatrolIndex = 0;
         currentPatrolPoint = patrolPoints[currentPatrolIndex];
         pathFinder = FindObjectOfType<PathfinderManager>();
-       
-       sharkState = sharkStates.Patrol;
+
+        Patrol();
 	}
 
     // Update is called once per frame
     void FixedUpdate()
     {
         t += Time.fixedDeltaTime;
-
-        switch (sharkState)
-        {
-
-            // If there are no fish nearby, the shark will patrol
-            case sharkStates.Patrol:
-                GetComponent<SpriteRenderer>().material.color = Color.white;
-
-                // there is something obstructing the view. 
-                Patrol();
-                break;
-        }
+        Patrol();
     }
 
     void Patrol()
@@ -111,16 +88,6 @@ public class SharkAI : MonoBehaviour {
             // Get shark to face right
             newScale = new Vector3(0.3f, 0.3f, 1);
             transform.localScale = newScale;
-        }
-    }
-
-  
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        // If the little fish is in an idle state it won't be eaten
-        if(other.gameObject.GetComponent<MotherFish>() != null)
-        {
-            other.GetComponent<MotherFish>().die();
         }
     }
 

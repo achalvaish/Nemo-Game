@@ -18,11 +18,8 @@ public abstract class Environment : MonoBehaviour
 {
     public float reward;
     public bool done;
-    //public int maxSteps;
-    //public int currentStep;
     public bool begun;
-   // public bool acceptingSteps;
-
+   
     public Agent agent;
     public int comPort;
     public int frameToSkip;
@@ -93,9 +90,15 @@ public abstract class Environment : MonoBehaviour
     public virtual void Reset()
     {
         reward = 0;
-        // Debug.Log("Episode count " + episodeCount);
+        Debug.Log("Episode count " + episodeCount);
         episodeCount++;
         done = false;
+
+        LittleFish[] littleFish = FindObjectsOfType<LittleFish>();
+        foreach (LittleFish fish in littleFish)
+        {
+            fish.reset();
+        }
     }
 
     public virtual void EndReset()
@@ -114,7 +117,6 @@ public abstract class Environment : MonoBehaviour
         }
         else
         {
-            // WriteResultsToFile();
             Reset();
             Debug.Log("End episode");
         }
