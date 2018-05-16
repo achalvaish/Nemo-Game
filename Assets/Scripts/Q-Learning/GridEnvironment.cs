@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.IO;
+using UnityEditor;
 
 public class GridEnvironment : Environment
 {
@@ -36,7 +38,8 @@ public class GridEnvironment : Environment
                 DestroyImmediate(actor);
             }
         }
-        
+
+        WipeFile();
         SetUp();
         agent = GameObject.FindGameObjectWithTag("agent").GetComponent<MotherFishQ>();
         agent.SendParameters(envParameters);
@@ -119,6 +122,7 @@ public class GridEnvironment : Environment
         // Up
         if (action == 0)
         {
+            // Check if there is a terrain block in the position where the agent would be moving to
             Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y + 1), new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
@@ -129,6 +133,7 @@ public class GridEnvironment : Environment
         // Up-Right
         if (action == 1)
         {
+            // Check if there is a terrain block in the position where the agent would be moving to
             Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y + 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
@@ -140,6 +145,7 @@ public class GridEnvironment : Environment
         // Right
         if (action == 2)
         {
+            // Check if there is a terrain block in the position where the agent would be moving to
             Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y), new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
@@ -151,6 +157,7 @@ public class GridEnvironment : Environment
         // Down-Right
         if (action == 3)
         {
+            // Check if there is a terrain block in the position where the agent would be moving to
             Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y - 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
@@ -161,6 +168,7 @@ public class GridEnvironment : Environment
         // Down
         if (action == 4)
         {
+            // Check if there is a terrain block in the position where the agent would be moving to
             Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y - 1), new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
@@ -171,6 +179,7 @@ public class GridEnvironment : Environment
         // Down-Left
         if (action == 5)
         {
+            // Check if there is a terrain block in the position where the agent would be moving to
             Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y - 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
@@ -181,6 +190,7 @@ public class GridEnvironment : Environment
         // Left
         if (action == 6)
         {
+            // Check if there is a terrain block in the position where the agent would be moving to
             Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y), new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
@@ -191,6 +201,7 @@ public class GridEnvironment : Environment
         // Up-Left
         if (action == 7)
         {
+            // Check if there is a terrain block in the position where the agent would be moving to
             Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y + 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
@@ -229,7 +240,37 @@ public class GridEnvironment : Environment
         if (done == true)
         {
             Debug.Log("Episode reward " + episodeReward);
+            WriteResultsToFile();
         }
-
     }
+
+    public void WriteResultsToFile()
+    {
+        string path = "Assets/Resources/results.txt";
+
+        //Write the episode number and reward to the results.txt file
+        StreamWriter writer = new StreamWriter(path, true);
+        writer.WriteLine((episodeCount - 1) + "\t" + episodeReward);
+        writer.Close();
+
+        //Re-import the file to update the reference in the editor
+        AssetDatabase.ImportAsset(path);
+        TextAsset asset = (TextAsset)Resources.Load("results.txt");
+    }
+
+    public void WipeFile()
+    {
+        string path = "Assets/Resources/results.txt";
+
+        //Erase the text in the results.txt file from the previous game
+        StreamWriter writer = new StreamWriter(path, false);
+        writer.WriteLine("Episode Reward");
+        writer.Close();
+
+        //Re-import the file to update the reference in the editor
+        AssetDatabase.ImportAsset(path);
+        TextAsset asset = (TextAsset)Resources.Load("results.txt");
+    }
+
+
 }
