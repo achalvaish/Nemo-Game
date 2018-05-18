@@ -67,7 +67,17 @@ public class MotherFishQ : Agent {
             }
             else
             {
-                q_table[lastState][action] += learning_rate * (reward + gamma * q_table[nextState].Max() - q_table[lastState][action]);
+                try
+                {
+                    q_table[lastState][action] += learning_rate * (reward + gamma * q_table[nextState].Max() - q_table[lastState][action]);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogException(e, this);
+                    Debug.Log("Last state: " + lastState);
+                    Debug.Log("Action: " + action);
+                    Debug.Log("Next state: " + nextState);
+                }
             }
         }
         lastState = nextState;

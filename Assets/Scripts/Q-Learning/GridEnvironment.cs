@@ -61,7 +61,8 @@ public class GridEnvironment : Environment
     public override List<float> collectState()
     {
         List<float> state = new List<float>();
-        float point = (gridSize * agent.transform.position.x) + agent.transform.position.y;
+        // float point = (gridSize * agent.transform.position.x) + agent.transform.position.y;
+        float point = agent.transform.position.x + agent.transform.position.y;
         state.Add(point);
 
         return state;
@@ -77,8 +78,7 @@ public class GridEnvironment : Environment
             DestroyImmediate(actor);
         }
         
-        visualAgent = GameObject.FindGameObjectWithTag("agent");
-        visualAgent.transform.position = new Vector2(1.0f, 1.0f);
+        agent.transform.position = new Vector2(1.0f, 1.0f);
         episodeReward = 0;
         fishCount = 0;
         EndReset();
@@ -94,10 +94,10 @@ public class GridEnvironment : Environment
         if (action == 0)
         {
             // Check if there is a terrain block in the position where the agent would be moving to
-            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y + 1), new Vector2(0.3f, 0.3f), 0.0f);
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(agent.transform.position.x, agent.transform.position.y + 1), new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y + 1);
+                agent.transform.position = new Vector2(agent.transform.position.x, agent.transform.position.y + 1);
             }                          
         }
 
@@ -105,10 +105,10 @@ public class GridEnvironment : Environment
         if (action == 1)
         {
             // Check if there is a terrain block in the position where the agent would be moving to
-            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y + 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(agent.transform.position.x + 1, agent.transform.position.y + 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y + 1).normalized;
+                agent.transform.position = new Vector2(agent.transform.position.x + 1, agent.transform.position.y + 1).normalized;
             }
                             
         }
@@ -117,10 +117,10 @@ public class GridEnvironment : Environment
         if (action == 2)
         {
             // Check if there is a terrain block in the position where the agent would be moving to
-            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y), new Vector2(0.3f, 0.3f), 0.0f);
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(agent.transform.position.x + 1, agent.transform.position.y), new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y);
+                agent.transform.position = new Vector2(agent.transform.position.x + 1, agent.transform.position.y);
             }
                            
         }
@@ -129,10 +129,10 @@ public class GridEnvironment : Environment
         if (action == 3)
         {
             // Check if there is a terrain block in the position where the agent would be moving to
-            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y - 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(agent.transform.position.x + 1, agent.transform.position.y - 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x + 1, visualAgent.transform.position.y - 1).normalized;
+                agent.transform.position = new Vector2(agent.transform.position.x + 1, agent.transform.position.y - 1).normalized;
             }      
         }
 
@@ -140,10 +140,10 @@ public class GridEnvironment : Environment
         if (action == 4)
         {
             // Check if there is a terrain block in the position where the agent would be moving to
-            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y - 1), new Vector2(0.3f, 0.3f), 0.0f);
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(agent.transform.position.x, agent.transform.position.y - 1), new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y - 1);
+                agent.transform.position = new Vector2(agent.transform.position.x, agent.transform.position.y - 1);
             }    
         }
 
@@ -151,10 +151,10 @@ public class GridEnvironment : Environment
         if (action == 5)
         {
             // Check if there is a terrain block in the position where the agent would be moving to
-            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y - 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(agent.transform.position.x - 1, agent.transform.position.y - 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y - 1).normalized;
+                agent.transform.position = new Vector2(agent.transform.position.x - 1, agent.transform.position.y - 1).normalized;
             }
         }
 
@@ -162,10 +162,10 @@ public class GridEnvironment : Environment
         if (action == 6)
         {
             // Check if there is a terrain block in the position where the agent would be moving to
-            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y), new Vector2(0.3f, 0.3f), 0.0f);
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(agent.transform.position.x - 1, agent.transform.position.y), new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y);
+                agent.transform.position = new Vector2(agent.transform.position.x - 1, agent.transform.position.y);
             }   
         }
 
@@ -173,32 +173,32 @@ public class GridEnvironment : Environment
         if (action == 7)
         {
             // Check if there is a terrain block in the position where the agent would be moving to
-            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y + 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
+            Collider2D[] blockTest = Physics2D.OverlapBoxAll(new Vector2(agent.transform.position.x - 1, agent.transform.position.y + 1).normalized, new Vector2(0.3f, 0.3f), 0.0f);
             if (blockTest.Where(col => col.gameObject.tag == "terrain").ToArray().Length == 0)
             {
-                visualAgent.transform.position = new Vector2(visualAgent.transform.position.x - 1, visualAgent.transform.position.y + 1).normalized;
+                agent.transform.position = new Vector2(agent.transform.position.x - 1, agent.transform.position.y + 1).normalized;
             }
         }
 
         // Do Nothing
         if (action == 8)
         {
-            visualAgent.transform.position = new Vector2(visualAgent.transform.position.x, visualAgent.transform.position.y);
+            agent.transform.position = new Vector2(agent.transform.position.x, agent.transform.position.y);
         }
 
         // If the agent finds the goal
-        if (visualAgent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("goal").GetComponent<Collider2D>()))
+        if (agent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("goal").GetComponent<Collider2D>()))
         {
             reward = 1;
-            Debug.Log("Goal reward");
+            // Debug.Log("Goal reward");
             done = true;
         }
 
         // If the agent hits the shark
-        if (visualAgent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("shark").GetComponent<Collider2D>()))
+        if (agent.GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("shark").GetComponent<Collider2D>()))
         {
             reward = -1;
-            Debug.Log("Shark reward");
+            // Debug.Log("Shark reward");
             done = true;
 
         }
@@ -207,11 +207,11 @@ public class GridEnvironment : Environment
         GameObject[] littleFish = GameObject.FindGameObjectsWithTag("fish");
         foreach (GameObject fish in littleFish)
         {
-            if (visualAgent.GetComponent<Collider2D>().IsTouching(fish.GetComponent<Collider2D>()))
+            if (agent.GetComponent<Collider2D>().IsTouching(fish.GetComponent<Collider2D>()))
             {
                 reward = 1;
                 fishCount++;
-                Debug.Log("Fish reward");
+                // Debug.Log("Fish reward");
             }
         }
 
@@ -219,7 +219,7 @@ public class GridEnvironment : Environment
 
         if (done == true)
         {
-            Debug.Log("Episode reward " + episodeReward);
+            // Debug.Log("Episode reward " + episodeReward);
             WriteResultsToFile();
         }
     }
@@ -230,7 +230,7 @@ public class GridEnvironment : Environment
 
         //Write the episode number and reward to the results.txt file
         StreamWriter writer = new StreamWriter(path, true);
-        writer.WriteLine((episodeCount - 1) + "\t" + episodeReward + "\t " + fishCount);
+        writer.WriteLine((episodeCount - 1) + "\t" + fishCount + "\t " + episodeReward);
         writer.Close();
 
         //Re-import the file to update the reference in the editor
@@ -244,7 +244,7 @@ public class GridEnvironment : Environment
 
         //Erase the text in the results.txt file from the previous game
         StreamWriter writer = new StreamWriter(path, false);
-        writer.WriteLine("Episode Reward \t Fish");
+        writer.WriteLine("Episode Fish \t Reward");
         writer.Close();
 
         //Re-import the file to update the reference in the editor

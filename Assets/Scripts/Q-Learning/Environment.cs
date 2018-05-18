@@ -90,7 +90,7 @@ public abstract class Environment : MonoBehaviour
     public virtual void Reset()
     {
         reward = 0;
-        Debug.Log("Episode count " + episodeCount);
+        // Debug.Log("Episode count " + episodeCount);
         episodeCount++;
         done = false;
 
@@ -118,7 +118,7 @@ public abstract class Environment : MonoBehaviour
         else
         {
             Reset();
-            Debug.Log("End episode");
+            // Debug.Log("End episode");
         }
     }
 
