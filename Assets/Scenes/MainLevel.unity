@@ -3125,11 +3125,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6.54
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.49
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3384,11 +3384,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.5463407
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.680614
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5790,9 +5790,7 @@ MonoBehaviour:
   skippingFrames: 0
   actions: []
   episodeCount: 1
-  actorObjs: []
-  players: []
-  visualAgent: {fileID: 0}
+  speed: 3
 --- !u!1 &1486009046
 GameObject:
   m_ObjectHideFlags: 0
@@ -6684,11 +6682,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.5463407
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 9.7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4142266422978936, guid: 95afeafebe170a349bec0d5b05a56d45, type: 2}
       propertyPath: m_LocalPosition.z

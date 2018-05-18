@@ -54,7 +54,7 @@ public class MotherFishQ : Agent {
 
     // Updates the value estimate matrix given a new experience (state, action, reward)
     // state = the environment state the experience happened in
-    // reward = the reward recieved by the agent from the environment for it's action
+    // reward = the reward recieved by the agent from the environment for its action
     // done = whether the episode has ended
     public override void SendState(List<float> state, float reward, bool done)
     {

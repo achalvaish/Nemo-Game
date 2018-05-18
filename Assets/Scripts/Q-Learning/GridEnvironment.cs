@@ -8,13 +8,10 @@ using UnityEditor;
 public class GridEnvironment : Environment
 {
 
-    public List<GameObject> actorObjs;
-    public string[] players;
-    public GameObject visualAgent;
     int gridSize;
-    int[] objectPositions;
     float episodeReward;
     int fishCount;
+    public float speed;
 
     void Start()
     {
@@ -61,7 +58,6 @@ public class GridEnvironment : Environment
     public override List<float> collectState()
     {
         List<float> state = new List<float>();
-        // float point = (gridSize * agent.transform.position.x) + agent.transform.position.y;
         float point = agent.transform.position.x + agent.transform.position.y;
         state.Add(point);
 
@@ -73,14 +69,17 @@ public class GridEnvironment : Environment
     {
         base.Reset();
 
-        foreach (GameObject actor in actorObjs)
-        {
-            DestroyImmediate(actor);
-        }
-        
-        agent.transform.position = new Vector2(1.0f, 1.0f);
         episodeReward = 0;
         fishCount = 0;
+
+        agent.transform.position = new Vector2(1.0f, 1.0f);
+        
+        LittleFish[] littleFish = FindObjectsOfType<LittleFish>();
+        foreach (LittleFish fish in littleFish)
+        {
+            fish.reset();
+        }   
+        
         EndReset();
     }
 

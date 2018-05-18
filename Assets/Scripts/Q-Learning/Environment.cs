@@ -27,7 +27,6 @@ public abstract class Environment : MonoBehaviour
     public string currentPythonCommand;
     public bool skippingFrames;
     public float[] actions;
-    //public float waitTime;
     public int episodeCount;
     
     public EnvironmentParameters envParameters;
@@ -90,15 +89,8 @@ public abstract class Environment : MonoBehaviour
     public virtual void Reset()
     {
         reward = 0;
-        // Debug.Log("Episode count " + episodeCount);
         episodeCount++;
         done = false;
-
-        LittleFish[] littleFish = FindObjectsOfType<LittleFish>();
-        foreach (LittleFish fish in littleFish)
-        {
-            fish.reset();
-        }
     }
 
     public virtual void EndReset()
@@ -118,7 +110,6 @@ public abstract class Environment : MonoBehaviour
         else
         {
             Reset();
-            // Debug.Log("End episode");
         }
     }
 
