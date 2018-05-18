@@ -267,14 +267,19 @@ public class GameController : MonoBehaviour {
         //Train
         if (((frameNum % framesPerTrainingUpdate) == 1) && (lowerExperienceCache.Count > learningCommenceTime))
         {
-            DoTrainingIteration();
+            DoLowerTrainingIteration();
+        }
+
+        if (((frameNum % framesPerTrainingUpdate) == 1) && (higherExperienceCache.Count > learningCommenceTime))
+        {
+            DoHigherTrainingIteration();
         }
 
         //Check if goal is reached
-        if(Vector2.Distance(motherFish.transform.position, new Vector2(goalLoc.x*13.0f, goalLoc.y * 13.0f))  < 0.5 || goalTimer > goalTimeout)
+        if (Vector2.Distance(motherFish.transform.position, new Vector2(goalLoc.x*13.0f, goalLoc.y * 13.0f))  < 0.5 || goalTimer > goalTimeout)
         {
             Debug.Log("goal updated");
-            goalTimer = 0;
+            SubGoalReached();
             GetNewGoal();
         }
 
@@ -282,7 +287,7 @@ public class GameController : MonoBehaviour {
         CheckGameOver();
     }
 
-    private void DoTrainingIteration()
+    private void DoLowerTrainingIteration()
     {
         double[][] trainingInput = new double[minibatchSize][];
         double?[][] trainingTarget = new double?[minibatchSize][];
@@ -306,6 +311,13 @@ public class GameController : MonoBehaviour {
         }
 
         lowerNet.Train(trainingInput, trainingTarget, learningRate, momentum);
+    }
+
+    private void DoHigherTrainingIteration()
+    {
+        double[][] trainingInput = new double[minibatchSize][];
+        double?[][] trainingTarget = new double?[minibatchSize][];
+
 
         //Train higher net
         for (int sampleNum = 0; sampleNum < minibatchSize; sampleNum++)
@@ -316,7 +328,7 @@ public class GameController : MonoBehaviour {
 
             trainingInput[sampleNum] = expItem.getStateRepresentation();
 
-            double?[] sampleTarget = new double?[] { null, null, null, null};
+            double?[] sampleTarget = new double?[] { null, null, null, null };
 
             // 1 for a win, 0 for a loss
             sampleTarget[expItem.getActionTaken()] = expItem.getResult();
@@ -326,6 +338,8 @@ public class GameController : MonoBehaviour {
 
         higherNet.Train(trainingInput, trainingTarget, learningRate, momentum);
     }
+
+
 
     private void AddExperienceToLowerCache(Experience expItem)
     {
@@ -355,6 +369,28 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    private void SubGoalReached()
+    {
+        float result = -1;
+        if(goalTimer < goalTimeout)
+        {
+            result = 1 - (goalTimer / goalTimeout);
+        }
+        else
+        {
+            result = 0;
+        }
+
+        foreach (Experience expItem in lowerNetEpisode)
+        {
+            expItem.SetResult(result);
+            AddExperienceToLowerCache(expItem);
+        }
+        lowerNetEpisode.Clear();
+
+        goalTimer = 0;
+    }
+
     private void CheckGameOver()
     {
         bool gameOver = false;
@@ -366,12 +402,12 @@ public class GameController : MonoBehaviour {
         {
             result = 0; 
             gameOver = true;
+            higherNetEpisode.Clear();   //Dont count when mother dies to higher net as this is a lower net issue
         }
         else if(motherFish.isSafe)
         {
             result = 1 - (float)episodeAge/(float)episodeTimeout;
             gameOver = true;
-            Debug.Log(result);
         }
 
         if(episodeAge >= episodeTimeout)
@@ -382,19 +418,14 @@ public class GameController : MonoBehaviour {
 
         if (gameOver)
         {
-            foreach (Experience expItem in lowerNetEpisode)
-            {
-                expItem.SetResult(result);
-                AddExperienceToLowerCache(expItem);
-            }
             foreach (Experience expItem in higherNetEpisode)
             {
                 expItem.SetResult(result);
                 AddExperienceToHigherCache(expItem);
             }
-            lowerNetEpisode.Clear();
             higherNetEpisode.Clear();
 
+            GetNewGoal();
             reset();
         }
     }
