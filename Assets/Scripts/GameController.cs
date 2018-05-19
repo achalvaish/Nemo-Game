@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour {
         motherFish = FindObjectOfType<MotherFish>();
         SharkAI[] sharks = FindObjectsOfType<SharkAI>();
         LittleFish[] littleFish = FindObjectsOfType<LittleFish>();
-        goalLoc = motherFish.transform.position;
+        goalLoc = new Vector2(motherFish.transform.position.magnitude/13.0f, motherFish.transform.position.y/13.0f);
 
         //Num inputs per net
         lowerNetInputs = 6;  //mother x and y, shark x and y, goal x and y
@@ -246,6 +246,11 @@ public class GameController : MonoBehaviour {
         episodeAge++;
         goalTimer += Time.deltaTime;
 
+
+
+        Debug.DrawLine(motherFish.transform.position, new Vector2(goalLoc.x * 13.0f, goalLoc.y * 13.0f), Color.red);
+
+
         // Update the time scale if it's been changed in the inspector
         if (timeScale > 0.0f)
         {
@@ -402,6 +407,12 @@ public class GameController : MonoBehaviour {
         {
             result = 0; 
             gameOver = true;
+            foreach (Experience expItem in lowerNetEpisode)
+            {
+                expItem.SetResult(result);
+                AddExperienceToLowerCache(expItem);
+            }
+            lowerNetEpisode.Clear();
             higherNetEpisode.Clear();   //Dont count when mother dies to higher net as this is a lower net issue
         }
         else if(motherFish.isSafe)
@@ -425,8 +436,10 @@ public class GameController : MonoBehaviour {
             }
             higherNetEpisode.Clear();
 
-            GetNewGoal();
             reset();
+
+            GetNewGoal();
+            
         }
     }
 

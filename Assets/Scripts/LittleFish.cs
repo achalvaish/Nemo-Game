@@ -48,7 +48,6 @@ public class LittleFish : MonoBehaviour {
     {
         motherFish.numFish++;
         caught = true;
-        gc.GetNewGoal();
         this.transform.position = new Vector2(100, 100);
     }
 
