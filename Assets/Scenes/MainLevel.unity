@@ -2488,6 +2488,8 @@ MonoBehaviour:
   lowerExperienceCacheSize: 1000000
   learningCommenceTime: 3
   higherExperienceCacheSize: 1000000
+  lowerResultsFile: lowerResults
+  higherResultsFile: higherResults
   episodeTimeout: 6000
   goalTimeout: 6
   goalLoc: {x: 0, y: 0}

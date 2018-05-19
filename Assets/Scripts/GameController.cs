@@ -37,6 +37,11 @@ public class GameController : MonoBehaviour {
     public int higherExperienceCacheSize;
     private int higherExperienceIdx;
 
+    public string lowerResultsFile;
+    public string higherResultsFile;
+    private int lowerRunCount;
+    private int higherRunCount;
+
     private int frameNum;
     private int episodeAge;
     public int episodeTimeout;
@@ -59,6 +64,8 @@ public class GameController : MonoBehaviour {
         frameNum = 0;
         episodeAge = 0;
         goalTimer = 0;
+        lowerRunCount = 0;
+        higherRunCount = 0;
 
         lowerExperienceCache = new ArrayList();
         lowerNetEpisode = new ArrayList();
@@ -117,6 +124,21 @@ public class GameController : MonoBehaviour {
             // Activations
             new ActivationFunction[] { new ActivationRELU(), new ActivationRELU(), new ActivationSigmoid() }
         );
+    }
+
+    private void saveLowerResult(int run, float result)
+    {
+        Debug.Log("lower result saved");
+        StreamWriter sw = new StreamWriter(Application.dataPath + "/" + lowerResultsFile + ".txt", true);
+        sw.WriteLine(run.ToString() + "," + result.ToString());
+        sw.Close();
+    }
+
+    private void saveHigherResult(int run, float result)
+    {
+        StreamWriter sw = new StreamWriter(Application.dataPath + "/" + higherResultsFile + ".txt", true);
+        sw.WriteLine(run.ToString() + "," + result.ToString());
+        sw.Close();
     }
 
     private void SaveNet()
@@ -283,7 +305,6 @@ public class GameController : MonoBehaviour {
         //Check if goal is reached
         if (Vector2.Distance(motherFish.transform.position, new Vector2(goalLoc.x*13.0f, goalLoc.y * 13.0f))  < 0.5 || goalTimer > goalTimeout)
         {
-            Debug.Log("goal updated");
             SubGoalReached();
             GetNewGoal();
         }
@@ -389,8 +410,10 @@ public class GameController : MonoBehaviour {
         foreach (Experience expItem in lowerNetEpisode)
         {
             expItem.SetResult(result);
-            AddExperienceToLowerCache(expItem);
+            AddExperienceToLowerCache(expItem);        
+            lowerRunCount++;
         }
+        saveLowerResult(lowerRunCount, result);
         lowerNetEpisode.Clear();
 
         goalTimer = 0;
@@ -410,8 +433,10 @@ public class GameController : MonoBehaviour {
             foreach (Experience expItem in lowerNetEpisode)
             {
                 expItem.SetResult(result);
-                AddExperienceToLowerCache(expItem);
+                AddExperienceToLowerCache(expItem);    
+                lowerRunCount++;
             }
+            saveLowerResult(lowerRunCount, result);
             lowerNetEpisode.Clear();
             higherNetEpisode.Clear();   //Dont count when mother dies to higher net as this is a lower net issue
         }
@@ -432,8 +457,10 @@ public class GameController : MonoBehaviour {
             foreach (Experience expItem in higherNetEpisode)
             {
                 expItem.SetResult(result);
-                AddExperienceToHigherCache(expItem);
+                AddExperienceToHigherCache(expItem);               
+                higherRunCount++;
             }
+            saveHigherResult(higherRunCount, result);
             higherNetEpisode.Clear();
 
             reset();
