@@ -38,7 +38,7 @@ public class GridEnvironment : Environment
         envParameters = new EnvironmentParameters()
         {
             observation_size = 0,
-            state_size = gridSize * gridSize,
+            state_size = 500,
             action_descriptions = new List<string>() { "Up", "Up-Right", "Right", "Down-Right", "Down", "Down-Left", "Left", "Up-Left", "Do Nothing" },
             action_size = 9,
             env_name = "GridWorld",
@@ -58,7 +58,7 @@ public class GridEnvironment : Environment
     public override List<float> collectState()
     {
         List<float> state = new List<float>();
-        float point = agent.transform.position.x + agent.transform.position.y;
+        float point = (gridSize * agent.transform.position.x) + agent.transform.position.y;
         state.Add(point);
 
         return state;
@@ -199,7 +199,6 @@ public class GridEnvironment : Environment
             reward = -1;
             // Debug.Log("Shark reward");
             done = true;
-
         }
 
         // If the agent finds a fish
